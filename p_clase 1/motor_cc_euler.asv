@@ -9,7 +9,7 @@ tF = 0.0003; %tF = 0.001;
 
 % Kp=.500;Ki=0.001;Kd=0.0001;color_='r';
 % Kp=1;Ki=0;Kd=0.0001;color_='k';
-% Kp=5;Ki=0;Kd=0;color_='b';
+% Kp=10;Ki=0;Kd=0;color_='b';
 Kp = 6; Ki = 920; Kd = 0; color_ = 'b';
 
 Ts = t_etapa;
@@ -27,7 +27,7 @@ for t = 0:t_etapa:tF
 
     e(k) = wRef - X(1); % Error
 
-    u = u + A1*e(k) + B1*e(k-1) + C1*e(k-2); % PID
+    u_t = u + A1*e(k) + B1*e(k-1) + C1*e(k-2); % PID
 
    
 %Saturacion de la accion de control:
@@ -36,13 +36,13 @@ for t = 0:t_etapa:tF
 % guarda el valor y luego lo compara para saturar la
 % entrada si hace falta
 
-% if(u_t>12)
-%     u=12;
-% elseif(u_t<-12)
-%     u=-12;
-% else
-%     u=u_t;
-% end
+if(u_t>12)
+    u=12;
+elseif(u_t<-12)
+    u=-12;
+else
+    u=u_t;
+end
 
 %2) usando las funciones max y min
 % u = max(min(u, 12), -12); 
@@ -86,12 +86,11 @@ sys_cl = feedback(C*P, 1);
 % Vector de tiempo para la simulación discreta
 t = 0:t_etapa:tF;
 
-% Obtener los datos de salida del modelo continuo
+% Obtener los datos del modelo continuo
 [y_step, t_step] = step(2*sys_cl, t); % Importante que usemos t para 
                                       % que tenga la misma cantidad de puntos 
                                       % y sea fácil comparar las curvas
-
-% Ubtener los datos de la accion de control del modelo continuo
+% Ubtener los datos de la accion de control del
 [y_control, t_control] = step(2*C/(1 + C*P), t);
 
 % Graficar ambos resultados en una sola figura
@@ -109,11 +108,34 @@ ylabel('Velocidad angular \omega [rad/s]');
 % Acción de control
 subplot(2,1,2); hold on;
 plot(t, acc, 'r', 'DisplayName', 'Acción de control (u) - Simulación');
-plot(t_control, y_control, 'b--', 'DisplayName', 'Acción de control - Modelo continuo');
+plot(t, ones(size(t)) * 2, 'b--', 'DisplayName', 'Referencia escalón (2V)'); % Línea de referencia
 title('Acción de control u(t)');
 xlabel('Tiempo [s]');
 ylabel('Voltaje [V]');
 legend('show');
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Obtener la acción de control del modelo continuo
+[y_control, t_control] = step(2*C/(1 + C*P), t); 
 
+% Graficar ambos resultados en una sola figura
+figure;
+
+% Salida velocidad angular
+subplot(2,1,1); hold on;
+plot(t, x1, 'r', 'DisplayName', 'Simulación discreta');
+plot(t_step, y_step, 'b', 'DisplayName', 'Modelo continuo (PID)');
+legend('show');
+title('Comparación: Simulación vs Modelo continuo con PID');
+xlabel('Tiempo [s]');
+ylabel('Velocidad angular \omega [rad/s]');
+
+% Acción de control
+subplot(2,1,2); hold on;
+plot(t, acc, 'r', 'DisplayName', 'Acción de control - Simulación');
+plot(t_control, y_control, 'b--', 'DisplayName', 'Acción de control - Modelo continuo');
+title('Acción de control u(t)');
+xlabel('Tiempo [s]');
+ylabel('Voltaje [V]');
+legend('show');
