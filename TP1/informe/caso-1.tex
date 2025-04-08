@@ -1,0 +1,114 @@
+\documentclass{article}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, amssymb}  % para fórmulas matemáticas
+\usepackage{siunitx}           % para unidades (opcional)
+\usepackage{graphicx}          % si vas a incluir imágenes
+\usepackage{hyperref}          % para hipervínculos
+\usepackage{geometry}          % para márgenes
+\begin{document}
+
+\section{Modelado de un sistema RLC en variables de estado}
+
+Se parte de un circuito serie RLC como el mostrado en la figura, con una entrada de tensión $v_e(t)$ y como salida se toma la tensión en la resistencia, $v_R(t)$.
+
+Para modelar este sistema en variables de estado, hay que identificar qué variables almacenan energía. En este caso, eso lo hacen el inductor y el capacitor, así que las variables de estado naturales a elegir son:
+
+\begin{itemize}
+    \item $x_1(t) = i(t)$, corriente en el inductor
+    \item $x_2(t) = v_c(t)$, tensión sobre el capacitor
+\end{itemize}
+
+Estas variables son suficientes para describir el estado dinámico del circuito en cualquier instante de tiempo.
+
+Aplicando la ley de Kirchhoff de tensiones al lazo del circuito, se tiene:
+\[
+v_e(t) = v_R(t) + v_L(t) + v_C(t)
+\]
+
+Y usando las relaciones constitutivas de los componentes:
+\[
+v_R(t) = Ri(t), \quad v_L(t) = L\frac{di(t)}{dt}, \quad i(t) = C\frac{dv_c(t)}{dt}
+\]
+
+Entonces, reemplazando:
+\[
+v_e(t) = R i(t) + L \frac{di(t)}{dt} + v_c(t)
+\]
+Y además:
+\[
+\frac{dv_c(t)}{dt} = \frac{i(t)}{C}
+\]
+
+Con esto, podemos armar el sistema de ecuaciones diferenciales y dejarlo en forma matricial-vectorial como:
+
+\[
+\dot{x}(t) = A x(t) + B u(t)
+\]
+
+Donde:
+\[
+x(t) =
+\begin{bmatrix}
+x_1(t) \\
+x_2(t)
+\end{bmatrix}
+=
+\begin{bmatrix}
+i(t) \\
+v_c(t)
+\end{bmatrix},
+\quad
+u(t) = v_e(t)
+\]
+
+\[
+A = 
+\begin{bmatrix}
+-\frac{R}{L} & -\frac{1}{L} \\
+\frac{1}{C} & 0
+\end{bmatrix}, \quad
+B =
+\begin{bmatrix}
+\frac{1}{L} \\
+0
+\end{bmatrix}
+\]
+
+Además, si se quiere obtener la salida $y(t) = v_R(t) = R \cdot i(t)$, se define:
+\[
+y(t) = C x(t), \quad
+C = 
+\begin{bmatrix}
+R & 0
+\end{bmatrix}
+\]
+
+\subsection*{Parámetros y Simulación}
+
+Se asignaron los siguientes valores:
+
+\[
+R = 220 \, \Omega, \quad L = 500 \, \text{mH}, \quad C = 2{,}2 \, \mu\text{F}
+\]
+
+La entrada $v_e(t)$ se define como una señal escalón que cambia de signo cada $10$ ms, alternando entre $+12$ V y $-12$ V. Las condiciones iniciales del sistema se consideraron nulas.
+
+Antes de simular, se analizó la dinámica del sistema. Para eso se calcularon los polos a partir de la matriz $A$, o de forma equivalente, con la función de transferencia obtenida por Laplace. Esto permite ver si el sistema es subamortiguado, sobreamortiguado o críticamente amortiguado.
+
+Con los polos, se determinó el tiempo de integración necesario. Si el sistema es oscilatorio, se eligió el paso como $h \approx \frac{1}{20 \cdot \omega_d}$, y si no, se basó en la dinámica más rápida. En este caso, se utilizó integración por Euler para simular la evolución de las variables de estado en el tiempo.
+
+El tiempo total de simulación fue de $50$ ms, suficiente para observar varios ciclos del cambio de la entrada.
+
+\subsection*{Conclusión}
+
+Este trabajo permitió entender cómo, a partir del concepto de variables de estado, se puede modelar y simular un sistema físico real como el circuito RLC. Elegimos como variables de estado a las que representan el almacenamiento de energía (corriente en el inductor y tensión en el capacitor), con lo cual armamos las ecuaciones diferenciales que definen el comportamiento dinámico del sistema.
+
+Después de armar la representación en el espacio de estados, usamos la matriz del sistema $A$ para analizar la dinámica interna, ver si es oscilatoria o no, y con eso elegir un paso de integración adecuado. En este caso, aplicamos el método de Euler para integrar numéricamente las ecuaciones del sistema.
+
+De la simulación se puede observar cómo el sistema responde ante una entrada que cambia de $+12$ a $-12$ V cada 10 ms. El comportamiento de la corriente y la tensión en el capacitor refleja la dinámica esperada del sistema RLC: oscilaciones amortiguadas, con una respuesta que intenta seguir los cambios bruscos de la entrada pero lo hace de forma suave debido a la presencia del inductor y el capacitor, que actúan como filtros.
+
+Este análisis es clave para entender el comportamiento temporal de sistemas eléctricos y para poder predecir su respuesta ante distintos tipos de entrada.
+
+\end{document}

@@ -1,3 +1,4 @@
+close all; clear; clc;
 P=1;%PM7.4 del DORF
 num=[1+P -P];
 den=[1 3 6];

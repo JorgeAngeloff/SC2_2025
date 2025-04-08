@@ -1,4 +1,4 @@
-clear; %close all;
+clear; close all;
 X = -[0; 0; 0; 0];
 ii = 0;
 t_etapa = 1e-4;
