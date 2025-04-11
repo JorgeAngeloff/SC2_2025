@@ -18,7 +18,8 @@ t_s=0:0.1:50;
 t_inic=3;
 [val lugar] =min(abs(t_inic-t0)); y_t1=y(lugar);
 t_t1=t0(lugar);
-ii=1;
+ii=1; 
+
 [val lugar] =min(abs(2*t_inic-t0));
 t_2t1=t0(lugar);
 y_2t1=y(lugar);
