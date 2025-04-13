@@ -9,7 +9,8 @@
 \usepackage{geometry}          % para márgenes
 \begin{document}
 
-\section{Modelado de un sistema RLC en variables de estado}
+\section{Item 1}
+\subsection{Modelado de un sistema RLC en variables de estado}
 
 Se parte de un circuito serie RLC como el mostrado en la figura, con una entrada de tensión $v_e(t)$ y como salida se toma la tensión en la resistencia, $v_R(t)$.
 
@@ -110,5 +111,136 @@ Después de armar la representación en el espacio de estados, usamos la matriz 
 De la simulación se puede observar cómo el sistema responde ante una entrada que cambia de $+12$ a $-12$ V cada 10 ms. El comportamiento de la corriente y la tensión en el capacitor refleja la dinámica esperada del sistema RLC: oscilaciones amortiguadas, con una respuesta que intenta seguir los cambios bruscos de la entrada pero lo hace de forma suave debido a la presencia del inductor y el capacitor, que actúan como filtros.
 
 Este análisis es clave para entender el comportamiento temporal de sistemas eléctricos y para poder predecir su respuesta ante distintos tipos de entrada.
+
+\section{Item 2}
+\section*{Identificación de parámetros de un sistema RLC a partir de la respuesta al escalón}
+
+\subsection*{Planteo del problema}
+Se dispone de la respuesta medida de un circuito RLC serie frente a una excitación tipo escalón. El objetivo es estimar los valores de $R$, $L$ y $C$ del sistema a partir de los datos, usando el método de la respuesta al escalón y comparando los resultados con el modelo teórico.
+
+\subsection*{Modelo del sistema}
+El circuito RLC serie responde a la siguiente ecuación diferencial:
+
+\begin{equation}
+V_e(t) = L \frac{di(t)}{dt} + R i(t) + V_C(t)
+\end{equation}
+
+Dado que la corriente en un capacitor se relaciona con la tensión por:
+
+\begin{equation}
+i(t) = C \frac{dV_C(t)}{dt}
+\end{equation}
+
+Podemos reescribir la ecuación de entrada en función de la tensión en el capacitor:
+
+\begin{equation}
+V_e(t) = LC \frac{d^2V_C(t)}{dt^2} + RC \frac{dV_C(t)}{dt} + V_C(t)
+\end{equation}
+
+Aplicando transformada de Laplace (con condiciones iniciales nulas), se obtiene la función de transferencia teórica:
+
+\begin{equation}
+\frac{V_C(s)}{V_e(s)} = \frac{1}{LC s^2 + RC s + 1}
+\end{equation}
+
+\subsection*{Análisis inicial de la respuesta}
+A partir del análisis gráfico de la respuesta medida del sistema se observó:
+
+\begin{itemize}
+    \item La salida $V_C(t)$ no presenta oscilaciones, por lo que se descartan polos complejos conjugados.
+    \item La forma de la curva sugiere un sistema de segundo orden con \textbf{polos reales distintos}.
+    \item Se observó una señal de entrada escalón con retardo. Para evitar complejidades, se seleccionó el primer escalón positivo sin retardo aparente.
+\end{itemize}
+
+\subsection*{Identificación por método de 3 puntos (polo-polo-cero)}
+Se aplicó el método descripto para sistemas de segundo orden con polos reales distintos, considerando una función de transferencia del tipo:
+
+\begin{equation}
+G(s) = \frac{K(T_3 s + 1)}{(T_1 s + 1)(T_2 s + 1)}
+\end{equation}
+
+Donde:
+\begin{itemize}
+    \item $K$: ganancia de estado estacionario.
+    \item $T_1, T_2$: constantes de tiempo asociadas a los polos reales.
+    \item $T_3$: constante de tiempo asociada al cero (posible).
+\end{itemize}
+
+Se seleccionaron tres puntos de la salida equiespaciados temporalmente: $t_1$, $2t_1$, y $3t_1$, extrayendo los valores de $V_C$ correspondientes: $y_1$, $y_2$, $y_3$.
+
+A partir de los valores normalizados:
+
+\begin{align}
+k_1 &= \frac{y_1 / A}{K} - 1 \\
+k_2 &= \frac{y_2 / A}{K} - 1 \\
+k_3 &= \frac{y_3 / A}{K} - 1
+\end{align}
+
+Se resolvió el siguiente sistema no lineal para obtener los valores de $\alpha_1 = e^{-t_1/T_1}$ y $\alpha_2 = e^{-t_1/T_2}$:
+
+\begin{equation}
+\beta = \frac{k_1 + \alpha_2}{\alpha_1 - \alpha_2}
+\end{equation}
+
+Luego, se despejan las constantes de tiempo:
+
+\begin{align}
+T_1 &= -\frac{t_1}{\ln \alpha_1} \\
+T_2 &= -\frac{t_1}{\ln \alpha_2} \\
+T_3 &= \beta(T_1 - T_2) + T_1
+\end{align}
+
+Con estos valores se construyó la función de transferencia estimada $\hat{G}(s)$.
+
+\subsection*{Estimación de parámetros físicos del sistema}
+La función de transferencia teórica no contiene el cero, por lo que se planteó:
+
+\begin{equation}
+G_{teo}(s) = \frac{1}{LC s^2 + RC s + 1}
+\end{equation}
+
+Para obtener los parámetros físicos, se estimó primero el valor de $C$ a partir de la derivada hacia atrás de $V_C(t)$:
+
+\begin{equation}
+C(t) = \frac{i(t)}{dV_C(t)/dt}
+\end{equation}
+
+Donde la derivada se calculó por diferencias finitas hacia atrás:
+
+\begin{equation}
+\frac{dV_C(t)}{dt} \approx \frac{V_C(t) - V_C(t - \Delta t)}{\Delta t}
+\end{equation}
+
+Una vez conocido $C$, se utilizaron los coeficientes del denominador estimado para calcular:
+
+\begin{align}
+R &= \text{coeficiente de } s \div C \\
+L &= \text{coeficiente de } s^2 \div C
+\end{align}
+
+\subsection*{Comparación de modelos}
+Se graficaron en conjunto las siguientes curvas:
+\begin{itemize}
+    \item Respuesta medida del sistema.
+    \item Respuesta del modelo estimado $\hat{G}(s)$.
+    \item Respuesta del modelo teórico $G_{teo}(s)$ con los valores de $R$, $L$ y $C$ obtenidos.
+    \item Respuesta del modelo teórico \textbf{con el cero} (modelo ampliado).
+\end{itemize}
+
+\subsection*{Observaciones}
+\begin{itemize}
+    \item La función estimada presenta un cero (en el numerador) que no se encuentra en el modelo teórico clásico de un RLC serie, pero que surge del método de identificación basado en la salida.
+    \item Este cero resulta ser muy cercano al origen ($T_3 \ll 1$), por lo cual puede despreciarse para simplificar la comparación con el modelo físico.
+    \item Se observa una ligera diferencia entre la curva teórica sin cero y la respuesta real en la zona de subida. Esta diferencia se reduce significativamente al incluir el cero estimado.
+\end{itemize}
+
+\subsection*{Conclusiones}
+\begin{itemize}
+    \item Se logró estimar adecuadamente una función de transferencia a partir de datos experimentales, utilizando el método de los tres puntos para sistemas con polos reales distintos.
+    \item A partir del modelo estimado se obtuvieron valores razonables de $R$, $L$ y $C$ que reproducen con buena precisión la dinámica del sistema.
+    \item La inclusión del cero en el modelo mejora el ajuste con la señal medida, lo que demuestra la utilidad del modelo de identificación, aún cuando no coincida estructuralmente con el circuito real.
+    \item El método demuestra ser útil para sistemas de segundo orden sin oscilaciones, donde se pueda asumir un modelo de polos reales distintos.
+\end{itemize}
+
 
 \end{document}

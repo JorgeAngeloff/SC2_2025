@@ -1,10 +1,12 @@
 # Fdb version 4
-["pdflatex"] 1744065257.86285 "caso-1.tex" "caso-1.pdf" "caso-1" 1744065258.82708 0
+["pdflatex"] 1744503217.94182 "caso-1.tex" "caso-1.pdf" "caso-1" 1744503219.05116 0
   "/etc/texmf/web2c/texmf.cnf" 1730943412.01257 475 c0e671620eb5563b2130f56340a5fde8 ""
+  "/home/jorge/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1000.600pk" 1744503217.77228 25396 4f4b5ab41d61296b1ab42b3bed9e75ab ""
   "/home/jorge/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1200.600pk" 1744064054.90169 31928 e14d450db323fb94a931892c35b1ec8d ""
   "/home/jorge/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1440.600pk" 1744064056.37962 40112 28cd02f8798490e1f194108fe32e0a09 ""
   "/home/jorge/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1000.600pk" 1744064055.64566 23784 35bd9eefd42ddcb5539b8689605887d3 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
+  "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/ecbx1000.tfm" 1136768653 3584 2d666ecf6d466d8b007246bc2f94d9da ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/ecbx1200.tfm" 1136768653 3584 402da0b29eafbad07963b1224b222f18 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/ecbx1440.tfm" 1136768653 3584 13049b61b922a28b158a38aeff75ee9b ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/ecrm0500.tfm" 1136768653 3584 178baad7ffca7f5d3428a83bd7cc64c3 ""
@@ -24,6 +26,7 @@
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb" 1248133631 37912 77d683123f92148345f3fc36a38d9ab1 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb" 1248133631 36281 c355509802a035cadc5f15869451dcee ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb" 1248133631 35752 024fb6c41858982481f6968b5fc26508 ""
+  "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb" 1248133631 31809 8670ca339bf94e56da1fc21c80635e2a ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb" 1248133631 32762 224316ccc9ad3ca0423a14971cfa7fc1 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb" 1248133631 32569 5e5ddc8df908dea60932f3c484a54c0d ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb" 1248133631 32716 08e384dc442464e7285e891af9f45947 ""
@@ -96,9 +99,9 @@
   "/usr/share/texmf/web2c/texmf.cnf" 1707919699 40399 f2c302f7d2af602abb742093540a5834 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1744064040.3244 165012 f177baa1c39a3ebd62c3096a43521a0d ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1744064051 6852801 878681b6c9dcd2d7928fc99f37ec13bc ""
-  "caso-1.aux" 1744065258.71951 470 8adb59321413350a2ef606c3ec8d59e0 "pdflatex"
-  "caso-1.out" 1744065258.72151 312 9f56e9876cae40fa68b41a700eb11ea2 "pdflatex"
-  "caso-1.tex" 1744065257.61052 4510 dcdf10886c6c402a26a3598a71516297 ""
+  "caso-1.aux" 1744503218.91732 686 e8f7ea8e77e975d9c3bd4ccddec8c3c6 "pdflatex"
+  "caso-1.out" 1744503218.92032 478 33b62acef4fb377180140781e77de986 "pdflatex"
+  "caso-1.tex" 1744503211.65406 10066 fd2071826e14f67c268b6779b72422e8 ""
   (generated)
   "caso-1.aux"
   "caso-1.log"
