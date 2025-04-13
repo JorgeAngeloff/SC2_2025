@@ -71,9 +71,9 @@ C_estimada(1) = NaN;
 C_estimada;
 
 %% Función de transferencia teórica con los valores estimados de R, L y C
-C=2.17e-6;
+C=2.177e-6;
 L=29.4e-3;
-R=282.4;
+R=282.3;
 
 num_teo = 1; %se desprecia el cero
 den_teo = [L*C R*C 1];
@@ -113,3 +113,4 @@ xlabel('Tiempo (s)');
 ylabel('Vc (V)');
 legend('Real', 'Estimada', 'Teórica sin cero', 'Teórica con cero', 'Location', 'best');
 grid on;
+

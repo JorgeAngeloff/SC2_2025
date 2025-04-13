@@ -24,7 +24,7 @@ C=[R  0];
 X0=[0 0]';x=[0 0]'; %Transpuestas 
   
   
-while(i<=pasos+1) 
+while(i<=pasos) 
     t(i)=i*h; %t aumenta con i 
      
     u(i)=vin; %prearo la entrada para el cambio  

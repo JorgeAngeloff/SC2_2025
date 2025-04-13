@@ -242,5 +242,40 @@ Se graficaron en conjunto las siguientes curvas:
     \item El método demuestra ser útil para sistemas de segundo orden sin oscilaciones, donde se pueda asumir un modelo de polos reales distintos.
 \end{itemize}
 
+\section{Item 3}
+\subsection*{Verificación del modelo a partir del segundo escalón negativo}
+
+Para validar los parámetros estimados en los ítems anteriores, se utilizó el segundo escalón negativo de la señal de entrada, el cual ocurre aproximadamente a los $0.05\,$s. A partir de este punto, se extrajeron las señales medidas de corriente $i(t)$, tensión de entrada $v_i(t)$ y tensión en el capacitor $v_c(t)$.
+
+Se normalizó el eje temporal para que el instante inicial coincida con el comienzo del escalón (es decir, $t=0$). Luego, se estimó la corriente utilizando el valor de capacitancia $C$ previamente calculado, a partir de la ecuación:
+
+\[
+i_{\text{estimada}}(t) = C \cdot \frac{d v_c(t)}{dt}
+\]
+
+Para la derivada temporal, se aplicó el método de diferencias hacia atrás sobre la señal $v_c(t)$, considerando el paso de tiempo constante $\Delta t$ obtenido de los datos medidos.
+
+A continuación, se presenta la comparación entre la corriente estimada y la medida:
+
+%\begin{figure}[h!]
+  %  \centering
+   % \includegraphics[width=0.9\textwidth]{figuras/comparacion_corriente_verificacion.png}
+    %\caption{Comparación entre corriente medida y corriente estimada a partir de la derivada de $v_c(t)$, utilizando la capacitancia estimada en el ítem anterior.}
+    %\label{fig:verificacion_corriente}
+%\end{figure}
+
+\subsubsection*{Conclusiones}
+
+La superposición entre la corriente medida y la corriente estimada es razonablemente buena, especialmente en la forma general de la respuesta y el pico inicial. Esto valida el valor de la capacitancia $C$ previamente estimado, así como la hipótesis de que el modelo obtenido describe adecuadamente el comportamiento dinámico del circuito RLC en torno a transiciones de entrada.
+
+Sin embargo, se observan pequeñas diferencias en la amplitud y en el decaimiento, lo cual puede atribuirse a:
+\begin{itemize}
+    \item Aproximaciones numéricas en el cálculo de la derivada.
+    \item Limitaciones de precisión en los datos medidos.
+    \item Efectos no modelados como la resistencia parásita del capacitor o pequeñas no linealidades.
+\end{itemize}
+
+En conjunto, este análisis respalda la validez del modelo obtenido a partir del primer escalón positivo, demostrando su capacidad para reproducir correctamente el comportamiento del sistema ante nuevas excitaciones.
+
 
 \end{document}
