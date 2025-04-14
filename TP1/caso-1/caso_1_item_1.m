@@ -50,3 +50,4 @@ end
 subplot(3,1,1); plot(t,i1,'r'); title('I1,t');  
 subplot(3,1,2); plot(t,vc,'b'); title('Vc,t'); 
 subplot(3,1,3); plot(t,u,'g');  title('U1,t');
+

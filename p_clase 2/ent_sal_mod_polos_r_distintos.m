@@ -1,4 +1,3 @@
-clear all;clc;
 
 %Se elige funcion de transferencia real de prueba
 %Planta con polos distintos

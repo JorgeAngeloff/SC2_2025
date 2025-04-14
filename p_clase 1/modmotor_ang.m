@@ -4,15 +4,18 @@ Va=accion;
 h=1e-7;
 omega= xant(1);
 wp= xant(2);
+
 theta = xant(3);
 ia = xant(4);
 
 for ii=1:t_etapa/h
 wpp =(-wp*(Ra*J+Laa*B)-omega*(Ra*B+Ki*Km)+Va*Ki)/(J*Laa);
+
 iap=(-Ra*ia -Km*omega+Va)/Laa;
 
 wp=wp+h*wpp;
-wp=wp-((1/J)*TL);
+
+wp=wp-((1/J)*TL); 
 
 omega = omega + h*wp;
 

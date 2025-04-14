@@ -277,5 +277,64 @@ Sin embargo, se observan pequeñas diferencias en la amplitud y en el decaimient
 
 En conjunto, este análisis respalda la validez del modelo obtenido a partir del primer escalón positivo, demostrando su capacidad para reproducir correctamente el comportamiento del sistema ante nuevas excitaciones.
 
+section{Caso 2}
+\subsection*{Ítem [4] -- Torque máximo soportado por el motor con controlador PID}
+
+\subsubsection*{Objetivo}
+Determinar el torque de carga máximo que puede soportar el motor modelado mediante las ecuaciones (1-5), (1-6) y (1-7) bajo una alimentación constante de \SI{12}{\volt}, evaluando la respuesta del sistema controlado con un PID discreto. Se busca identificar el valor de $T_L$ a partir del cual el motor no puede mantener su velocidad de referencia.
+
+\subsubsection*{Metodología}
+Se utilizó un modelo del motor implementado en MATLAB mediante integración por el método de Euler con paso temporal $\Delta t = \SI{1e-7}{\second}$. El sistema es regulado por un controlador PID con parámetros:
+
+\begin{itemize}
+  \item $K_p = 6$
+  \item $K_i = 920$
+  \item $K_d = 0$
+\end{itemize}
+
+El torque de carga $T_L$ se incrementa linealmente en cada paso temporal con un valor de $\Delta T_L = \SI{1e-9}{Nm}$ hasta un tiempo total de simulación de \SI{5}{\milli\second}. Se registran la velocidad angular $\omega(t)$ y el valor de $T_L(t)$ para identificar el instante en el que la velocidad angular comienza a decaer y no puede mantenerse próxima a la referencia impuesta de \SI{2}{rad/s}.
+
+\subsubsection*{Código}
+El siguiente fragmento representa la simulación principal del sistema:
+
+\begin{lstlisting}[language=Matlab, caption={Simulación para identificación de $T_L$ máximo}]
+% Fragmento clave:
+TL=0; delta_TL = 1e-9;
+...
+for t = 0:t_etapa:tF
+    ...
+    X = modmotor(t_etapa, X, u, TL);
+    ...
+    x1(ii)=X(1); % Omega
+    ...
+    TL_vec(ii) = TL;
+    TL = TL + delta_TL;
+end
+\end{lstlisting}
+
+\subsubsection*{Resultados}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{figuras/tl_vs_omega.png}
+    \caption{Evolución de la velocidad angular del motor y del torque de carga aplicado}
+    \label{fig:tl_vs_omega}
+\end{figure}
+
+La \autoref{fig:tl_vs_omega} muestra cómo la velocidad angular $\omega(t)$ decrece a medida que el torque de carga incrementa, hasta llegar a un punto donde el motor no puede sostener la velocidad de referencia. Observando el cruce por cero de la velocidad, se puede estimar que el torque máximo soportado bajo estas condiciones de control es:
+
+\[
+T_{L, \text{máx}} \approx \SI{2.2e-5}{Nm}
+\]
+
+Este valor se obtuvo al observar el cruce por cero en el gráfico de $\omega(t)$, correspondiente aproximadamente a $t \approx \SI{0.0022}{\second}$.
+
+\subsubsection*{Observaciones}
+\begin{itemize}
+    \item La estimación del torque máximo es sensible a los parámetros del PID: un controlador más agresivo podría sostener un $T_L$ ligeramente mayor antes de perder seguimiento.
+    \item Es importante considerar este valor como una referencia para dimensionar adecuadamente el hardware de control y potencia, como transistores de salida y disipadores térmicos.
+    \item Se recomienda realizar simulaciones adicionales con distintos valores de referencia y parámetros del controlador para obtener una curva característica del sistema bajo distintas condiciones de operación.
+\end{itemize}
+
 
 \end{document}
