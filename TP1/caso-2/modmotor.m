@@ -1,5 +1,7 @@
 function [X]=modmotor(t_etapa, xant, accion, TL)
 Laa=366e-6; J=5e-9;Ra=55.6;B=0;Ki=6.49e-3;Km=6.53e-3;
+%Laa = 2.43309; J = 0.00258956; Ra = 2.43309; B = 0.0594551; Ki = 0.411; Km = 0.64803;
+
 Va=accion;
 h=1e-7;
 omega= xant(1);

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.4.7)  13 APR 2025 20:02
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.4.7)  16 APR 2025 21:32
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -490,11 +490,7 @@ If that doesn't work, type  X <return>  to quit.
 LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 319.
 (/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 2023/04/13 v2.5m Standard LaTeX font definitions
-)
-
-LaTeX Warning: Reference `fig:tl_vs_omega' on page 7 undefined on input line 324.
-
-[7] [8] (./caso-1.aux
+) [7] [8] [9] [10] [11] (./caso-1.aux
 LaTeX Info: Redefining \. on input line 11.
 LaTeX Info: Redefining \% on input line 11.
 )
@@ -504,27 +500,27 @@ L3 programming layer <2024-01-22>
  ***********
 
 
-LaTeX Warning: There were undefined references.
+Package rerunfilecheck Warning: File `caso-1.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
 
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
-Package rerunfilecheck Info: File `caso-1.out' has not changed.
-(rerunfilecheck)             Checksum: 5ECCA2F189EE67DBA958DCF338F39A4E;554.
+Package rerunfilecheck Info: Checksums for `caso-1.out':
+(rerunfilecheck)             Before: 5ECCA2F189EE67DBA958DCF338F39A4E;554
+(rerunfilecheck)             After:  4A9D8B999AD0A960871DD2EDDF6AE5E4;2039.
  ) 
 Here is how much of TeX's memory you used:
- 15596 strings out of 476047
- 299258 string characters out of 5792076
+ 15614 strings out of 476047
+ 299486 string characters out of 5792076
  1937975 words of memory out of 5000000
- 37409 multiletter control sequences out of 15000+600000
- 566237 words of font info for 53 fonts, out of 8000000 for 9000
+ 37413 multiletter control sequences out of 15000+600000
+ 566572 words of font info for 54 fonts, out of 8000000 for 9000
  85 hyphenation exceptions out of 8191
- 75i,10n,80p,466b,970s stack positions out of 10000i,1000n,20000p,200000b,200000s
- </home/jorge/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ectt1000.600pk> </home/jorge/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm0700.600pk> </home/jorge/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1000.600pk> </home/jorge/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1000.600pk> </home/jorge/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1200.600pk> </home/jorge/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1440.600pk></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb>
-Output written on caso-1.pdf (8 pages, 170087 bytes).
+ 75i,10n,80p,466b,990s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ </home/jorge/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1000.600pk> </home/jorge/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ectt1000.600pk> </home/jorge/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm0700.600pk> </home/jorge/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1000.600pk> </home/jorge/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1000.600pk> </home/jorge/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1200.600pk> </home/jorge/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1440.600pk></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb>
+Output written on caso-1.pdf (11 pages, 185077 bytes).
 PDF statistics:
- 377 PDF objects out of 1000 (max. 8388607)
- 148 compressed objects within 2 object streams
- 50 named destinations out of 1000 (max. 500000)
+ 430 PDF objects out of 1000 (max. 8388607)
+ 174 compressed objects within 2 object streams
+ 63 named destinations out of 1000 (max. 500000)
  33 words of extra memory for PDF output out of 10000 (max. 10000000)
 

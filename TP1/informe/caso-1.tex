@@ -336,5 +336,117 @@ Este valor se obtuvo al observar el cruce por cero en el gráfico de $\omega(t)$
     \item Se recomienda realizar simulaciones adicionales con distintos valores de referencia y parámetros del controlador para obtener una curva característica del sistema bajo distintas condiciones de operación.
 \end{itemize}
 
+\section{Ítem 5: Identificación del modelo dinámico del motor}
+
+\subsection{Objetivo}
+
+El objetivo de este ítem es obtener un modelo dinámico que describa el comportamiento de un motor de corriente continua, a partir de mediciones experimentales de su velocidad angular $\omega$ frente a dos entradas: un escalón de tensión $V_a$ y un escalón de torque de carga $T_L$. A partir de las funciones de transferencia estimadas, se pretende extraer los parámetros físicos característicos del modelo del motor.
+
+\subsection{1. Carga y preprocesamiento de los datos}
+
+Se utilizaron los datos medidos del archivo \texttt{Curvas\_Medidas\_Motor\_2025.xls}. De dicho archivo se extrajeron los siguientes tramos:
+
+\begin{itemize}
+    \item \textbf{Curva $\omega / V_a$:} Se seleccionaron las filas 201 a 400, donde se aplica un escalón de 12\,V sin retardo.
+    \item \textbf{Curva $\omega / T_L$:} Se seleccionaron las filas 401 a 700, donde se observa una perturbación negativa en la velocidad angular debido a un escalón positivo en el torque de carga.
+\end{itemize}
+
+En ambos casos se normalizó el tiempo para que $t = 0$ coincida con el instante de aplicación del escalón.
+
+Dado que el efecto del escalón en $T_L$ fue una disminución en $\omega$, se aplicó un cambio de signo y centrado respecto al valor inicial para ajustar la señal de velocidad a una forma creciente, compatible con la metodología de identificación utilizada.
+
+\subsection{2. Estimación de la función de transferencia}
+
+Se empleó el método de los tres puntos para obtener una función de transferencia estimada de segundo orden sobreamortiguada con la siguiente forma:
+
+\[
+G(s) = K \cdot \frac{T_3 s + 1}{(T_1 s + 1)(T_2 s + 1)}
+\]
+
+donde:
+\begin{itemize}
+    \item $K$ es la ganancia estática,
+    \item $T_1$ y $T_2$ son las constantes de tiempo asociadas a los dos polos reales distintos,
+    \item $T_3$ es la constante de tiempo asociada al cero.
+\end{itemize}
+
+El método consiste en tomar tres muestras equiespaciadas de la salida ante un escalón, y a partir de ellas deducir la ganancia y las constantes de tiempo del sistema. Los resultados obtenidos son:
+
+\subsubsection*{Para $\omega / V_a$:}
+
+\begin{itemize}
+    \item $K = 3.765$
+    \item $T_1 = 0.0045$\,s
+    \item $T_2 = 0.00341$\,s
+    \item $T_3 = 0.00138$\,s
+\end{itemize}
+
+Función de transferencia estimada:
+
+\[
+\frac{\omega(s)}{V_a(s)} = \frac{3.765 \cdot (0.00138s + 1)}{(0.0045s + 1)(0.00341s + 1)}
+\]
+
+\subsubsection*{Para $\omega / T_L$:}
+
+\begin{itemize}
+    \item $K = 33.75$
+    \item $T_1 = 0.00175$\,s
+    \item $T_2 = 0.001845$\,s
+    \item $T_3 = 0.0103$\,s
+\end{itemize}
+
+Función de transferencia estimada:
+
+\[
+\frac{\omega(s)}{T_L(s)} = \frac{33.75 \cdot (0.0103s + 1)}{(0.00175s + 1)(0.001845s + 1)}
+\]
+
+\subsection{3. Modelo físico del motor}
+
+El modelo dinámico del motor utilizado se basa en un esquema típico con tres parámetros eléctricos y tres parámetros mecánicos:
+
+\begin{itemize}
+    \item Parámetros eléctricos: resistencia del inducido $R_a$, inductancia $L_a$, constante de par $K_i$.
+    \item Parámetros mecánicos: momento de inercia $J_m$, coeficiente de fricción viscosa $B_m$, constante de fuerza contraelectromotriz $K_m$.
+\end{itemize}
+
+La función de transferencia general del motor en lazo abierto es:
+
+\[
+\frac{\omega(s)}{V_a(s)} = \frac{K_m K_i}{(L_a J_m) s^2 + (L_a B_m + R_a J_m) s + (R_a B_m + K_m K_i)}
+\]
+
+Se equipara esta expresión con el denominador de la función estimada y se resuelve el sistema de ecuaciones simbólicas para identificar los parámetros físicos.
+
+\subsubsection*{Parámetros identificados}
+
+\begin{itemize}
+    \item $R_a = 2.43\;\Omega$ (valor medido)
+    \item $L_a = 0.00475$\,H
+    \item $K_i = 0.443$
+    \item $J_m = 0.00113$\,kg·m\textsuperscript{2}
+    \item $K_m = 0.562$
+    \item $B_m = 0.146$\,N·m·s/rad
+\end{itemize}
+
+\subsection{4. Observaciones}
+
+\begin{itemize}
+    \item La respuesta estimada para $\omega / V_a$ presenta una excelente coincidencia con la medición experimental, tanto en la ganancia como en la dinámica transitoria.
+    \item Para $\omega / T_L$ se observó mayor dispersión en los datos. Fue necesario invertir la señal y centrarla para obtener una respuesta tipo escalón creciente. A pesar de ello, el modelo estimado representa adecuadamente la dinámica general del sistema.
+    \item Se verificó que el sistema presenta dos polos reales negativos (sobreamortiguado) y un cero en el numerador, como se esperaba para un sistema de segundo orden no mínimo fase.
+    \item El método de identificación por tres puntos es una herramienta efectiva cuando las señales están bien definidas y con bajo nivel de ruido.
+\end{itemize}
+
+\subsection{5. Conclusiones}
+
+\begin{itemize}
+    \item Se obtuvieron modelos dinámicos de segundo orden para el motor en respuesta a $V_a$ y a $T_L$, que se ajustan razonablemente a los datos experimentales.
+    \item A partir de estas funciones de transferencia se identificaron con éxito los parámetros físicos del motor, tanto eléctricos como mecánicos.
+    \item El modelo identificado es adecuado para ser utilizado en el diseño de controladores y en simulaciones más avanzadas que involucren perturbaciones o condiciones de carga variables.
+    \item La combinación de MATLAB y herramientas simbólicas permite resolver con eficiencia problemas de identificación de sistemas físicos a partir de datos reales.
+\end{itemize}
+
 
 \end{document}
