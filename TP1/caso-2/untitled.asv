@@ -65,18 +65,22 @@ Wr_ia_Chen = K2_C*(T3*s + 1) / (T1*T2*s^2 + (T1 + T2)*s + 1);
 
 % Tus funciones estimadas (con el cero eliminado)
 Wr_Va_est = 3.765 / (5.164e-05*s^2 + 0.04662*s + 1);
-Wr_ia_est =(0.026*( 0.7908*s+1) )/ (5.164e-05*s^2 + 0.04662*s + 1);
+Wr_ia_est =0.026*( 0.7908*s+1) / (5.164e-05*s^2 + 0.04662*s + 1);
 
 % Ecuaciones estructurales del modelo físico
 eq1 = K1_C/(T1*T2) == Ki/(Jm*La);
-eq2 = K2_C/(T1*T2) ==  Bm/(Jm*La);%1/(Ra/Jm*La);%Bm/La*Jm
+eq2 = K2_C/(T1*T2) == 1/(Ra/Jm*La);%Bm/La*Jm
 eq3 = T3 == Jm/Bm;
 eq4 = (Bm*La + Jm*Ra)/(Jm*La) == (T1 + T2)/(T1*T2);
 eq5 = (Bm*Ra + Ki*Km)/(Jm*La) == 1/(T1*T2);
 
 % Extraídas del denominador de la función estimada ωr/Va
-eq6 = T1*T2 == 5.164e-05;
-eq7 = T1 + T2 == 0.04662;
+eq6 = T1*T2 == 0.01533;
+eq7 = T1 + T2 == 0.3673;
+
+% T3_ang =1.750e03;
+% eq8 = T3 == T3_ang;
+
 
 % Resolver el sistema (sin incluir Ra como incógnita)
 vars = [La, Ki, Jm, Km, Bm, K1_C, K2_C, T1, T2, T3];

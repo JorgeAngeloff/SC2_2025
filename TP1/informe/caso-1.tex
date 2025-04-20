@@ -7,6 +7,9 @@
 \usepackage{graphicx}          % si vas a incluir imágenes
 \usepackage{hyperref}          % para hipervínculos
 \usepackage{geometry}          % para márgenes
+
+\usepackage{listings}
+
 \begin{document}
 
 \section{Item 1}
@@ -314,14 +317,14 @@ end
 
 \subsubsection*{Resultados}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.75\textwidth]{figuras/tl_vs_omega.png}
-    \caption{Evolución de la velocidad angular del motor y del torque de carga aplicado}
-    \label{fig:tl_vs_omega}
-\end{figure}
+%\begin{figure}[H]
+ %   \centering
+  %  \includegraphics[width=0.75\textwidth]{figuras/tl_vs_omega.png}
+   % \caption{Evolución de la velocidad angular del motor y del torque de carga aplicado}
+    %\label{fig:tl_vs_omega}
+%\end{figure}
 
-La \autoref{fig:tl_vs_omega} muestra cómo la velocidad angular $\omega(t)$ decrece a medida que el torque de carga incrementa, hasta llegar a un punto donde el motor no puede sostener la velocidad de referencia. Observando el cruce por cero de la velocidad, se puede estimar que el torque máximo soportado bajo estas condiciones de control es:
+La figura muestra cómo la velocidad angular $\omega(t)$ decrece a medida que el torque de carga incrementa, hasta llegar a un punto donde el motor no puede sostener la velocidad de referencia. Observando el cruce por cero de la velocidad, se puede estimar que el torque máximo soportado bajo estas condiciones de control es:
 
 \[
 T_{L, \text{máx}} \approx \SI{2.2e-5}{Nm}
@@ -447,6 +450,106 @@ Se equipara esta expresión con el denominador de la función estimada y se resu
     \item El modelo identificado es adecuado para ser utilizado en el diseño de controladores y en simulaciones más avanzadas que involucren perturbaciones o condiciones de carga variables.
     \item La combinación de MATLAB y herramientas simbólicas permite resolver con eficiencia problemas de identificación de sistemas físicos a partir de datos reales.
 \end{itemize}
+
+\section{Ítem 6: Control PID discreto del ángulo del motor}
+
+\subsection*{Consigna}
+Implementar un PID en tiempo discreto para que el ángulo del motor permanezca en una referencia de 1~rad, sometido al torque descripto en la Fig. 1-3. \emph{Tip: partir de $K_P = 0.1$, $K_I = 0.01$, $K_D = 5$}.
+
+\subsection*{Implementación y desarrollo}
+
+El controlador PID se implementó en forma discreta utilizando la ecuación general de diferencias basada en el método trapezoidal:
+
+\[
+u[k] = u[k{-}1] + A_1 e[k] + B_1 e[k{-}1] + C_1 e[k{-}2]
+\]
+
+donde:
+
+\begin{align*}
+A_1 &= \frac{2K_P T_s + K_I T_s^2 + 2K_D}{2T_s} \\
+B_1 &= \frac{-2K_P T_s + K_I T_s^2 - 4K_D}{2T_s} \\
+C_1 &= \frac{K_D}{T_s}
+\end{align*}
+
+El sistema se simuló utilizando el modelo del motor obtenido previamente por identificación, con la entrada de control $u$ limitada entre $[-12\ \text{V},\ 12\ \text{V}]$ para reflejar saturación del actuador.
+
+Durante la simulación se observó que, con el paso de integración original $T_s = 1\text{ ms}$, el error acumulado era significativo debido al comportamiento del término integral. Para mejorar la precisión numérica, se incrementó el paso a $T_s = 10\text{ ms}$, lo que redujo la acumulación de error y estabilizó la respuesta.
+
+\subsection*{Código MATLAB utilizado}
+
+\begin{verbatim}
+clear;
+X = -[0; 0; 0; 0];
+ii = 0;
+t_etapa = 1e-2;      % Paso de integración ampliado
+thetaRef = 1;        % Referencia de ángulo [rad]
+tF = 10;             % Tiempo final de simulación
+TL = 0;
+
+% Constantes del PID ajustadas
+Kp = 2000;
+Ki = 5000;
+Kd = 10;
+
+Ts = t_etapa;
+A1 = ((2*Kp*Ts) + (Ki*(Ts^2)) + (2*Kd)) / (2*Ts);
+B1 = (-2*Kp*Ts + Ki*(Ts^2) - 4*Kd) / (2*Ts);
+C1 = Kd / Ts;
+
+e = zeros(tF / t_etapa, 1); 
+u = 0;
+
+for t = 0:t_etapa:tF
+    ii = ii + 1; k = ii + 2;
+
+    % Torque externo aplicado según consigna
+    if(t >= 0.7010)
+        TL = 0.12;
+    end
+    if(t >= 1.001)
+        TL = 0;
+    end
+
+    X = modmotor_ang(t_etapa, X, u, TL);
+    e(k) = thetaRef - X(3); % Error de posición angular
+    u = u + A1*e(k) + B1*e(k-1) + C1*e(k-2); % PID discreto
+
+    % Saturación del actuador
+    u = max(min(u, 12), -12); 
+
+    % Registro de variables
+    x1(ii) = X(1); % Velocidad angular
+    x2(ii) = X(2); % Wp
+    x3(ii) = X(3); % Ángulo
+    x4(ii) = X(4); % Corriente
+    acc(ii) = u;
+    carga(ii) = TL;
+end
+
+% Gráficos
+t = 0:t_etapa:tF;
+subplot(3,1,1); hold on;
+plot(t,x3,'r'); title('Salida \theta'); xlabel('Tiempo [s]');
+subplot(3,1,2); hold on;
+plot(t,carga,'m'); title('Carga TL'); xlabel('Tiempo [s]');
+subplot(3,1,3); hold on;
+plot(t,acc,'b'); title('Entrada u_t'); xlabel('Tiempo [s]');
+\end{verbatim}
+
+\subsection*{Observaciones}
+
+\begin{itemize}
+    \item La respuesta del sistema con los valores iniciales sugeridos ($K_P = 0.1$, $K_I = 0.01$, $K_D = 5$) fue muy lenta, por lo que se aumentaron considerablemente las ganancias para lograr una regulación aceptable.
+    \item El aumento del paso de integración ($T_s = 10$~ms) ayudó a estabilizar la simulación y evitar errores numéricos acumulados, especialmente en el término integral.
+    \item Una oscilación pequeña en régimen permanente ($\pm 0.02$~rad) fue observada, producto de la ausencia de una componente derivativa en etapas anteriores. Se incorporó $K_D > 0$ para mejorar el amortiguamiento.
+\end{itemize}
+
+\subsection*{Conclusiones}
+
+Se logró implementar un controlador PID discreto efectivo que regula el ángulo del motor a 1~rad pese a perturbaciones externas. Fue fundamental ajustar las ganancias a valores más altos que los sugeridos inicialmente y agregar la acción derivativa para evitar oscilaciones sostenidas en régimen. El paso de integración también tuvo un rol clave: si es muy pequeño, se acumulan errores numéricos; si es muy grande, se pierde precisión. Se encontró un equilibrio con $T_s = 10$~ms.
+
+El modelo del motor utilizado corresponde al identificado previamente a partir de curvas experimentales, lo cual permitió simular de manera realista la dinámica del sistema.
 
 
 \end{document}
