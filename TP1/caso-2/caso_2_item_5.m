@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 %
+=======
+%%
+>>>>>>> c89398b (actualizando el repo postparcial)
 %Wr/Va
 %
 clear; clc; close; 
@@ -17,7 +21,11 @@ StepAmplitude = 2;  % Amplitud del escalón (2V)
 t = t - t(1);  % Ahora t(1) = 0
 
 % Selección de puntos para el método 
+<<<<<<< HEAD
 t_inic = 0.065;%5e-3; %0.065;  % Tiempo inicial para primer punto 
+=======
+t_inic = 64e-3;%0.065;%5e-3; %0.065;  % Tiempo inicial para primer punto 
+>>>>>>> c89398b (actualizando el repo postparcial)
 [val lugar] = min(abs(t_inic - t)); 
 y_t1 = w(lugar);
 t_t1 = t(lugar);
@@ -61,6 +69,7 @@ xlabel('Tiempo (s)');
 ylabel('w (r/seg)');
 legend('Real', 'Estimada', 'Location', 'best');
 grid on;
+<<<<<<< HEAD
 %%
 
 % --- FUNCIÓN DE TRANSFERENCIA TEÓRICA ---
@@ -76,6 +85,28 @@ Ra  = 2.43309
 a2 = La * Jm;
 a1 = Ra * Jm + La * Bm;
 a0 = Ra * Bm + Ki * Km;
+=======
+
+
+
+
+
+%% 
+
+% --- FUNCIÓN DE TRANSFERENCIA TEÓRICA ---
+% Parámetros físicos conocidos (1ra solución)
+La  = 0.002511
+Ki  = 3.765
+Jm  = 0.02056
+Km  = 0.2485
+Bm  = 0.026
+Ra  = 2.415
+
+% Coeficientes del denominador
+a2 = (La * Jm);
+a1 = (Ra * Jm) + (La * Bm);
+a0 = (Ra * Bm) + (Ki * Km);
+>>>>>>> c89398b (actualizando el repo postparcial)
 
 % Función de transferencia teórica
 w_va_teo = tf(Ki, [a2 a1 a0])
@@ -95,6 +126,7 @@ ylabel('Velocidad angular \omega (rad/s)');
 legend('Real','Estimada','Teórica','Location','best');
 grid on;
 
+<<<<<<< HEAD
 
 %%
 %
@@ -171,6 +203,12 @@ grid on;
 %Ia/Va
 %
 clear; clc; close; 
+=======
+%%
+%Ia/Va
+%
+clear;  %close; 
+>>>>>>> c89398b (actualizando el repo postparcial)
 
 data = xlsread('Curvas_Medidas_Motor_2025.xls', 'Hoja1');
 t = data(201:400, 1);    % Tiempo (desde fila 1001 hasta 5000) que corresponde al primer escalon sin retardo
@@ -186,7 +224,11 @@ StepAmplitude = 2;  % Amplitud del escalón (2V)
 t = t - t(1);  % Ahora t(1) = 0
 
 % Selección de puntos para el método 
+<<<<<<< HEAD
 t_inic = 4e-3;%5e-3; %0.065;  % Tiempo inicial para primer punto 
+=======
+t_inic = 55e-3;%5e-3; %0.065;  % Tiempo inicial para primer punto 
+>>>>>>> c89398b (actualizando el repo postparcial)
 [val lugar] = min(abs(t_inic - t)); 
 y_t1 = ia(lugar);
 t_t1 = t(lugar);
@@ -230,6 +272,7 @@ xlabel('Tiempo (s)');
 ylabel('ia(A)');
 legend('Real', 'Estimada', 'Location', 'best');
 grid on;
+<<<<<<< HEAD
 
 
 %%
@@ -286,3 +329,41 @@ subplot(4,1,4); plot(t,TL,'g');  title('TL,t');
 % set(h, 'Position', [100 100 800 900]);  % Tamaño de figura [ancho alto]
 % set(gcf, 'Color', [0.95 0.95 0.95]);   % Fondo gris claro
 
+=======
+%%
+% --- FUNCIÓN DE TRANSFERENCIA TEÓRICA ---
+% Parámetros físicos conocidos (1ra solución)
+La  = 0.002511
+Ki  = 3.765
+Jm  = 0.02056
+Km  = 0.2485
+Bm  = 0.026
+Ra  = 2.415
+
+% Coeficientes del denominador
+a2 = (La * Jm);
+a1 = (Ra * Jm) + (La * Bm);
+a0 = (Ra * Bm) + (Ki * Km);
+% Coeficientes del numerador (s*J + B)
+b1 = Jm;
+b0 = Bm;
+
+% Reutilamos el denominador: a2, a1, a0 (ya definidos)
+
+ia_va_teo = tf([b1 b0], [a2 a1 a0]);
+
+% Simulamos la respuesta al escalón de 2V
+[y_teo_ia, t_teo_ia] = step(StepAmplitude * ia_va_teo, t(end));
+
+% --- GRAFICADO COMPARATIVO ---
+figure;
+plot(t, ia, 'b', 'LineWidth', 1.5); hold on;           % Datos reales de corriente
+plot(t_estimada, y_estimada, 'r--', 'LineWidth', 1.5); % Estimada
+plot(t_teo_ia, y_teo_ia, 'g:', 'LineWidth', 2);        % Teórica
+
+title('Comparación: Corriente Real vs Estimada vs Teórica');
+xlabel('Tiempo (s)');
+ylabel('Corriente I_a (A)');
+legend('Real', 'Estimada', 'Teórica', 'Location', 'best');
+grid on;
+>>>>>>> c89398b (actualizando el repo postparcial)

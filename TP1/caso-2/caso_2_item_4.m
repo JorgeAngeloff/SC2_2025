@@ -1,11 +1,23 @@
+<<<<<<< HEAD
+=======
+%Deja de seguir a la referencia en 243.016mseg con TL=2.10695e-5N,Ia=213.488mA 
+%El motor gira a w=0 rad/seg en 249.70m4seg con TL=2.16493e-5, Ia=215.781mA
+>>>>>>> c89398b (actualizando el repo postparcial)
 clc; clear; close all;
 X = -[0; 0; 0];
 ii = 0;
 t_etapa = 1e-7;
+<<<<<<< HEAD
 wRef = 2;
 tF = 0.5;%0.0003; %tF = 0.001;
 TL=0;
 delta_TL = 1e-9; 
+=======
+wRef = 20;
+tF = 0.25;%0.0003; %tF = 0.001;
+TL=0;
+delta_TL = 8.67e-12; 
+>>>>>>> c89398b (actualizando el repo postparcial)
 % Constantes del PID
 % Kp=.500;Ki=0.001;Kd=0.0001;color_='r';
 % Kp=1;Ki=0;Kd=0.0001;color_='k';
@@ -54,6 +66,7 @@ t = 0:t_etapa:tF;
 % legend('\omega(t)', 'T_L(t)');
 
 
+<<<<<<< HEAD
 %Grafico de simulacion
 t=0:t_etapa:tF;
 subplot(3,1,1);hold on;
@@ -62,6 +75,19 @@ subplot(3,1,2);hold on;
 plot(t,acc,color_);title('Entrada u_t, v_a');
 xlabel('Tiempo [Seg.]');
 subplot(3,1,3);hold on;
+=======
+% %Grafico de simulacion
+t=0:t_etapa:tF;
+subplot(4,1,1);hold on;
+plot(t,x1,color_);title('Velocidad angular, \omega_t');
+subplot(4,1,2);hold on;
+plot(t,TL_vec,color_);title('Entrada Torque, TL');
+xlabel('Tiempo [Seg.]');
+subplot(4,1,3);hold on;
+plot(t,acc,color_);title('Entrada u_t, v_a');
+xlabel('Tiempo [Seg.]');
+subplot(4,1,4);hold on;
+>>>>>>> c89398b (actualizando el repo postparcial)
 plot(t,x3,color_);title('Corriente de armadura , i_a');
 xlabel('Tiempo [Seg.]');
 

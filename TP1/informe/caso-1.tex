@@ -80,9 +80,19 @@ B =
 \end{bmatrix}
 \]
 
+<<<<<<< HEAD
 Además, si se quiere obtener la salida $y(t) = v_R(t) = R \cdot i(t)$, se define:
 \[
 y(t) = C x(t), \quad
+=======
+La salida se define:
+\[
+y(t) = C x(t) \]
+Donde: 
+\[y(t) = v_R(t) = R \cdot i(t)\] 
+ 
+\[
+>>>>>>> c89398b (actualizando el repo postparcial)
 C = 
 \begin{bmatrix}
 R & 0
@@ -99,22 +109,49 @@ R = 220 \, \Omega, \quad L = 500 \, \text{mH}, \quad C = 2{,}2 \, \mu\text{F}
 
 La entrada $v_e(t)$ se define como una señal escalón que cambia de signo cada $10$ ms, alternando entre $+12$ V y $-12$ V. Las condiciones iniciales del sistema se consideraron nulas.
 
+<<<<<<< HEAD
 Antes de simular, se analizó la dinámica del sistema. Para eso se calcularon los polos a partir de la matriz $A$, o de forma equivalente, con la función de transferencia obtenida por Laplace. Esto permite ver si el sistema es subamortiguado, sobreamortiguado o críticamente amortiguado.
 
 Con los polos, se determinó el tiempo de integración necesario. Si el sistema es oscilatorio, se eligió el paso como $h \approx \frac{1}{20 \cdot \omega_d}$, y si no, se basó en la dinámica más rápida. En este caso, se utilizó integración por Euler para simular la evolución de las variables de estado en el tiempo.
+=======
+Antes de simular, se analizó la dinámica del sistema. Para eso se calcularon los polos a partir de la matriz $A$, Calculando el siguiente determinante obtenemos el polinomio caracteristico del sistema, para luego obtener los polos.
+
+$$det|sI-A| -> Polinomio Caracteristico del sistema$$
+
+Resulta: 
+
+$$S_{1,2}=-220 \, \pm J \, 927.74 $$
+
+Con estos polos podemos deducir que se trata de un sistema subamortiguado. Al ser un sistema con polos complejos conjugados, se calculo el tiempo de integracion en base a la frecuencia natural amortiguada,  $h \approx \frac{2\pi}{100 \cdot \omega_d}$. Despejando $\ommega_d$ de los polos obtenidos. 
+
+\[w_d=932.3 \, \frac{rad}{seg}\] 
+\[ h=\frac{2\pi}{100 \cdot \omega_d} =67\,\mu seg\]
+
+
+En este caso, se utilizó integración por Euler para simular la evolución de las variables de estado en el tiempo.
+>>>>>>> c89398b (actualizando el repo postparcial)
 
 El tiempo total de simulación fue de $50$ ms, suficiente para observar varios ciclos del cambio de la entrada.
 
 \subsection*{Conclusión}
 
+<<<<<<< HEAD
 Este trabajo permitió entender cómo, a partir del concepto de variables de estado, se puede modelar y simular un sistema físico real como el circuito RLC. Elegimos como variables de estado a las que representan el almacenamiento de energía (corriente en el inductor y tensión en el capacitor), con lo cual armamos las ecuaciones diferenciales que definen el comportamiento dinámico del sistema.
 
 Después de armar la representación en el espacio de estados, usamos la matriz del sistema $A$ para analizar la dinámica interna, ver si es oscilatoria o no, y con eso elegir un paso de integración adecuado. En este caso, aplicamos el método de Euler para integrar numéricamente las ecuaciones del sistema.
+=======
+Este trabajo permitió entender cómo, a partir del concepto de variables de estado, se puede modelar y simular un sistema físico real como el circuito RLC. 
+>>>>>>> c89398b (actualizando el repo postparcial)
 
 De la simulación se puede observar cómo el sistema responde ante una entrada que cambia de $+12$ a $-12$ V cada 10 ms. El comportamiento de la corriente y la tensión en el capacitor refleja la dinámica esperada del sistema RLC: oscilaciones amortiguadas, con una respuesta que intenta seguir los cambios bruscos de la entrada pero lo hace de forma suave debido a la presencia del inductor y el capacitor, que actúan como filtros.
 
 Este análisis es clave para entender el comportamiento temporal de sistemas eléctricos y para poder predecir su respuesta ante distintos tipos de entrada.
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> c89398b (actualizando el repo postparcial)
 \section{Item 2}
 \section*{Identificación de parámetros de un sistema RLC a partir de la respuesta al escalón}
 
@@ -550,6 +587,63 @@ plot(t,acc,'b'); title('Entrada u_t'); xlabel('Tiempo [s]');
 Se logró implementar un controlador PID discreto efectivo que regula el ángulo del motor a 1~rad pese a perturbaciones externas. Fue fundamental ajustar las ganancias a valores más altos que los sugeridos inicialmente y agregar la acción derivativa para evitar oscilaciones sostenidas en régimen. El paso de integración también tuvo un rol clave: si es muy pequeño, se acumulan errores numéricos; si es muy grande, se pierde precisión. Se encontró un equilibrio con $T_s = 10$~ms.
 
 El modelo del motor utilizado corresponde al identificado previamente a partir de curvas experimentales, lo cual permitió simular de manera realista la dinámica del sistema.
+<<<<<<< HEAD
+=======
+\section{Ítem 6}
+
+Se implementó un controlador PID en tiempo discreto para regular el ángulo \(\theta(t)\) de un motor de corriente continua hacia una referencia constante de \(1\,\text{rad}\), considerando un perfil de torque de carga variable \(T_L(t)\), tal como se describe en la Fig. 1-3.
+
+El sistema fue simulado en MATLAB mediante un modelo dinámico del motor basado en sus ecuaciones diferenciales físicas. Las variables de estado consideradas fueron la velocidad angular \(\omega\), su derivada \(w_p\), el ángulo \(\theta\) y la corriente del inducido \(i_a\). Las ecuaciones se integraron utilizando el método de Euler explícito con paso constante \(h\). El modelo implementado fue:
+
+\begin{align*}
+    \dot{\omega} &= w_p \\
+    \dot{w}_p &= \frac{-w_p(R_a J + L_a B) - \omega(R_a B + K_i K_m) + V_a K_i}{J L_a} - \frac{T_L}{J} \\
+    \dot{i}_a &= \frac{-R_a i_a - K_m \omega + V_a}{L_a} \\
+    \dot{\theta} &= \omega
+\end{align*}
+
+\noindent Estas ecuaciones fueron discretizadas e integradas en el archivo \texttt{modmotor.m}, mediante una estructura de la forma:
+
+\begin{equation*}
+    x(k+1) = x(k) + h \cdot \dot{x}(k)
+\end{equation*}
+
+Inicialmente, se empleó el mismo paso de integración \(h = 10^{-7}\,\text{s}\) utilizado en simulaciones anteriores con un conjunto distinto de parámetros del motor. Sin embargo, al utilizar los parámetros ajustados recientemente, se observó que el sistema se volvía inestable o divergía numéricamente, arrojando salidas de orden \(10^{300}\). Esto indicó un problema de estabilidad numérica del método de Euler debido a la presencia de polos más lentos en el sistema.
+
+Se procedió entonces a calcular el polo dominante del sistema a partir de su función de transferencia, que resultó ser:
+
+\begin{equation*}
+    G(s) = \frac{K}{0.01432\,s^2 + 0.346\,s + 1}
+\end{equation*}
+
+Los polos asociados a esta dinámica se ubican aproximadamente en \(s \approx -17.9\) y \(s \approx -4.0\), por lo que la constante de tiempo más rápida es del orden de \(\tau \approx 1/17.9 \approx 0.056\,\text{s}\). Se utilizó como criterio de estabilidad para el método de Euler:
+
+\begin{equation*}
+    h < \frac{2}{|\text{Re}(p_{\text{más rápido}})|} \approx \frac{2}{17.9} \approx 0.112\,\text{s}
+\end{equation*}
+
+Por lo tanto, se seleccionó un paso de integración \(h = 10^{-2}\,\text{s}\), que resulta suficientemente pequeño como para capturar la dinámica del sistema sin comprometer la estabilidad numérica, y suficientemente grande como para evitar errores acumulativos por redondeo.
+
+El controlador PID fue discretizado mediante una fórmula recursiva directa:
+
+\begin{equation*}
+    u(k) = u(k-1) + A_1 e(k) + B_1 e(k-1) + C_1 e(k-2)
+\end{equation*}
+
+donde los coeficientes fueron obtenidos a partir de la discretización por diferencias progresivas:
+
+\begin{align*}
+    A_1 &= \frac{2K_p T_s + K_i T_s^2 + 2K_d}{2T_s} \\
+    B_1 &= \frac{-2K_p T_s + K_i T_s^2 - 4K_d}{2T_s} \\
+    C_1 &= \frac{K_d}{T_s}
+\end{align*}
+
+\noindent Los valores iniciales sugeridos fueron \(K_p = 0.1\), \(K_i = 0.01\) y \(K_d = 5\), que permitieron observar un comportamiento transitorio aceptable y una buena compensación ante la aparición del torque de carga \(T_L(t)\). La acción de control fue limitada a \(\pm12\,\text{V}\) mediante saturación, tal como ocurre en una implementación práctica.
+
+\subsection*{Conclusión}
+
+Se logró implementar correctamente un control PID en tiempo discreto para regular el ángulo del motor ante perturbaciones de carga. El paso de integración del método de Euler fue ajustado a \(h = 10^{-2}\,\text{s}\) para garantizar la estabilidad numérica, dado el nuevo conjunto de parámetros del motor. La acción de control permitió alcanzar y mantener la referencia angular deseada, incluso en presencia de cargas externas variables, demostrando la robustez del diseño PID frente a perturbaciones.
+>>>>>>> c89398b (actualizando el repo postparcial)
 
 
 \end{document}
