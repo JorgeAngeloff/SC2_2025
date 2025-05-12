@@ -1,24 +1,24 @@
-%% Obtener la función de transferencia continua G(s)
-G=zpk([],[0 -2],[5]);
-Tm=(0.15);
+%% Obtener la función de transferencia continua G(s) (Este es el priemer bloque)
+G=zpk([],[0 -2],[5])
+Tm=(0.15)
 
 %% Hallar la FT discreta de lazo abierto G_D(s) del sistema 
 % de la figura con Z0H a la entrada y el tiempo de muestreo asignado Tm
 Gd=c2d(G,Tm,'zoh')
 
 %% Dibujar el mapa de polos y ceros del sistema continuo y el discreto
-pzmap(G);
-pzmap(Gd)
+ % pzmap(G)
+  pzmap(Gd)
 
 %% ¿Qué ocurre con el mapa si se multiplica por 10 el periodo de muestreo?
-Gd1=c2d(G,10*Tm,'zoh');
-pzmap(Gd1);
+Gd1=c2d(G,10*Tm,'zoh')
+pzmap(Gd1)
 %Se desplazan el polo y el cero hacia el interior del círculo unitario
 %El sistema sigue siendo estable (los polos siguen adentro del círculo 
 % unitario), pero la respuesta transitoria se vuelve más lenta
 
 %% Obtener la respuesta al escalon del sistema discreto y determinar si es estable
-step(G)
+% step(G)
 step(Gd1)
 %El sistema discreto posee un polo en circulo unitario, lo que
 %lo vuelve marginalmente estable, la respuesta es estable pero no
@@ -50,10 +50,10 @@ lsim(F,t,t)
 %* Graficar el lugar de raíces del sistema continuo G(s) y del discreto Gd(s) indicando las ganan-
 % cias criticas de estabilidad (si las hubiera)
 
-rlocus(G) %No posee ganancia critica, el sistema es estable para K>0 
-rlocus(Gd) %Para K<5.41 Gd es estable
+% rlocus(G) %No posee ganancia critica, el sistema es estable para K>0 
+ rlocus(Gd) %Para K<5.41 Gd es estable
 
-%% ¿ Que ocurre con la estabilidad relativa si se aumenta 10 veces el tiempo de muestreo original ?
+%% ¿ Que ocurre con la estabilidad relativa si se aumenta 10 veces el tiempo de muestreo original ? (este es el noveno bloque)
 rlocus(Gd1) %Para K<0.934 Gd1 es estable
 %Al aumentar el tiempo de muestreo de Gd
 % la estabilidad relativa disminuye, ahora

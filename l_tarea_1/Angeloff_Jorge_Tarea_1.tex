@@ -1,0 +1,215 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{listings}
+\usepackage{xcolor}
+\geometry{a4paper, margin=2.5cm}
+
+\lstdefinestyle{mystyle}{
+  backgroundcolor=\color{gray!10},   % fondo gris claro
+  commentstyle=\color{green!50!black}, 
+  keywordstyle=\color{blue},
+  numberstyle=\tiny\color{gray},
+  stringstyle=\color{red!70!brown},
+  basicstyle=\ttfamily\small,        % fuente monoespaciada más pequeña
+  breaklines=true,                   
+  captionpos=b,
+  keepspaces=true,
+  numbers=left,                      % numeración de líneas a la izquierda
+  numbersep=5pt,                     
+  showspaces=false,
+  showstringspaces=false,
+  showtabs=false,
+  frame=single,                      % cuadro alrededor del código
+  language=Matlab
+}
+
+\lstset{style=mystyle}
+
+
+
+\title{\Huge Sistemas de Control II \\[0.4cm] \Large Tarea 1}
+\date{}
+
+\begin{document}
+
+% Carátula
+\begin{titlepage}
+    \centering
+    \vspace*{2cm}
+    {\Huge\bfseries Sistemas de Control II \par}
+    \vspace{0.5cm}
+    {\Large Tarea 1 \par}
+    \vspace{2cm}
+    \begin{flushleft}
+        \large
+        \textbf{Profesor:} Sergio Laboret\\[0.3cm]
+        \textbf{Alumno:} Angeloff Jorge
+    \end{flushleft}
+    \vspace{2cm}
+    \begin{center}
+        \begin{tabular}{|c|c|c|c|}
+            \hline
+            Polo 1 & Polo 2 & Cero & Ganancia \\
+            \hline
+            0 & -2 & -- & 5 \\
+            \hline
+        \end{tabular}
+    \end{center}
+    \vfill
+    {\large \today}
+\end{titlepage}
+
+\section{Análisis de un sistema analógico con muestreador y retentor de orden cero}
+
+\subsection{Obtención de la función de transferencia continua \(G(s)\)}
+\begin{lstlisting}[language=Matlab]
+G = zpk([], [0 -2], [5]);
+Tm = 0.15;
+\end{lstlisting}
+
+Se define el sistema continuo como una función de transferencia en forma de ceros, polos y ganancia, con polos en \(s = 0\) y \(s = -2\), sin ceros, y ganancia \(K = 5\). El tiempo de muestreo se establece en 0.15 segundos.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.5\textwidth]{/home/jorge/Documentos/FCEFyN/SC2/Laboret/Tarea1/capturas/figura1.png}
+    \caption{Definición de la función de transferencia continua}
+\end{figure}
+
+\subsection{Transformación a un sistema discreto con retención ZOH}
+\begin{lstlisting}[language=Matlab]
+Gd = c2d(G, Tm, 'zoh');
+\end{lstlisting}
+
+La transformación discreta con retención de orden cero permite obtener la función de transferencia \(G_d(z)\) del sistema. Esto representa al sistema cuando es muestreado con periodo \(T_m\).
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.3\textwidth]{/home/jorge/Documentos/FCEFyN/SC2/Laboret/Tarea1/capturas/figura2.png}
+    \caption{Funcion de transferencia discreta obtenida mediante ZOH}
+\end{figure}
+
+\subsection{Mapa de polos y ceros del sistema continuo y discreto}
+\begin{lstlisting}[language=Matlab]
+pzmap(G);
+pzmap(Gd);
+\end{lstlisting}
+
+Comparar los mapas de polos y ceros del sistema continuo y su contraparte discreta revela cómo el muestreo afecta la localización de los polos.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.48\textwidth]{/home/jorge/Documentos/FCEFyN/SC2/Laboret/Tarea1/capturas/figura3_1.png}
+    \includegraphics[width=0.48\textwidth]{/home/jorge/Documentos/FCEFyN/SC2/Laboret/Tarea1/capturas/figura3_2.png}
+    \caption{Mapas de polos y ceros del sistema continuo (izq.) y discreto (der.)}
+\end{figure}
+
+\newpage
+
+\subsection{Efecto de aumentar el periodo de muestreo}
+\begin{lstlisting}[language=Matlab]
+Gd1 = c2d(G, 10*Tm, 'zoh');
+pzmap(Gd1);
+\end{lstlisting}
+
+Al aumentar el tiempo de muestreo, los polos del sistema discreto se acercan al origen del plano \(z\), lo cual reduce la velocidad de respuesta del sistema.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.3\textwidth]{/home/jorge/Documentos/FCEFyN/SC2/Laboret/Tarea1/capturas/figura4_1.png}
+    \includegraphics[width=0.6\textwidth]{/home/jorge/Documentos/FCEFyN/SC2/Laboret/Tarea1/capturas/figura4_2.png}
+    \caption{Sistema con \(T_m\) aumentado. Funcion de transferencia (izq.), mapa de polos y cero (der.)}
+\end{figure}
+
+\subsection{Respuesta al escalón y análisis de estabilidad}
+\begin{lstlisting}[language=Matlab]
+step(G)
+step(Gd1)
+\end{lstlisting}
+
+La respuesta discreta con \(Gd1\) muestra una rampa creciente: el sistema es marginalmente estable, pero no acotado.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.48\textwidth]{/home/jorge/Documentos/FCEFyN/SC2/Laboret/Tarea1/capturas/figura5_1.png}
+    \includegraphics[width=0.48\textwidth]{/home/jorge/Documentos/FCEFyN/SC2/Laboret/Tarea1/capturas/figura5_2.png}
+    \caption{Respuesta al escalón de sistema continuo (izq.) y discreto \(Gd1\) (der.)}
+\end{figure}
+
+\newpage
+
+\subsection{Tipo de sistema y error en estado estacionario}
+\begin{lstlisting}[language=Matlab]
+Kp = dcgain(Gd)
+F = feedback(Gd,1)
+step(F)
+ess = 1 / (1 + Kp)
+\end{lstlisting}
+
+\(G_d(z)\) es de tipo 1 por su polo en \(z = 1\). Esto implica que el error ante una entrada escalón es cero, confirmado por el cálculo del error en estado estacionario y la respuesta al escalón.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.3\textwidth]{/home/jorge/Documentos/FCEFyN/SC2/Laboret/Tarea1/capturas/figura6_1.png}
+    \includegraphics[width=0.6\textwidth]{/home/jorge/Documentos/FCEFyN/SC2/Laboret/Tarea1/capturas/figura6_2.png}
+    \caption{Sistema realimentado \(F(z)\) y \(e_{SS}\)(izq.). Respuesta al escalón (der.) }
+\end{figure}
+
+\subsection{Respuesta ante una rampa}
+\begin{lstlisting}[language=Matlab]
+t = 0:Tm:100*Tm;
+lsim(F, t, t)
+\end{lstlisting}
+
+La salida sigue la rampa con un error constante, dado que el sistema puede seguir señales de tipo rampa pero con error proporcional a \(1/K_v\).
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.7\textwidth]{/home/jorge/Documentos/FCEFyN/SC2/Laboret/Tarea1/capturas/figura7.png}
+    \caption{Respuesta ante entrada tipo rampa}
+\end{figure}
+
+\newpage
+
+\subsection{Lugar de raíces de los sistemas continuo y discreto}
+\begin{lstlisting}[language=Matlab]
+rlocus(G)
+rlocus(Gd)
+\end{lstlisting}
+
+El sistema continuo es estable para toda \(K > 0\). El sistema discreto \(G_d\) es estable para \(K < 5.41\).
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.7\textwidth]{/home/jorge/Documentos/FCEFyN/SC2/Laboret/Tarea1/capturas/figura8_1.png}
+    \includegraphics[width=0.7\textwidth]{/home/jorge/Documentos/FCEFyN/SC2/Laboret/Tarea1/capturas/figura8_2.png}
+    \caption{Lugar de raíces: continuo \(G\) (arr.) y discreto \(G_d\) (aba.)}
+\end{figure}
+
+\subsection{Efecto del aumento del periodo de muestreo en la estabilidad}
+\begin{lstlisting}[language=Matlab]
+rlocus(Gd1)
+\end{lstlisting}
+
+Al aumentar el tiempo de muestreo, la ganancia crítica de estabilidad disminuye. El sistema se vuelve inestable con menor ganancia: para \(K < 0.934\) sigue siendo estable.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.7\textwidth]{/home/jorge/Documentos/FCEFyN/SC2/Laboret/Tarea1/capturas/figura9.png}
+    \caption{Lugar de raíces para sistema muestreado con mayor \(T_m\)}
+\end{figure}
+
+\section*{Conclusión}
+
+En este trabajo se analizaron las diferencias entre un sistema continuo y su versión discreta obtenida con retención de orden cero. Se comprobó cómo el proceso de muestreo afecta la ubicación de los polos, la estabilidad y la respuesta del sistema.
+
+Se vio que aumentar el tiempo de muestreo reduce la estabilidad del sistema discreto, y que la ganancia crítica baja en consecuencia. También se observó que el sistema discreto es de tipo 1, lo que garantiza error cero ante un escalón y error constante ante una rampa.
+
+Por último, con el lugar de raíces se visualizó cómo cambia la estabilidad al variar la ganancia y el tiempo de muestreo, lo cual es fundamental para el diseño de controladores digitales.
+\end{document}
+

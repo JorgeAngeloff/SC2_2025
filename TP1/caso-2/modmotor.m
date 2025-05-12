@@ -17,11 +17,9 @@ ia = xant(3);
 for ii=1:t_etapa/h
 wpp =(-wp*(Ra*J+Laa*B)-omega*(Ra*B+Ki*Km)+Va*Ki)/(J*Laa);
 wp=wp+h*wpp;
-<<<<<<< HEAD
 wp=wp-((1/J)*(TL/10000000));
-=======
+
 wp=wp-((1/J)*(TL));
->>>>>>> c89398b (actualizando el repo postparcial)
 
 iap=(-Ra*ia -Km*omega+Va)/Laa;
 ia=ia+iap*h;

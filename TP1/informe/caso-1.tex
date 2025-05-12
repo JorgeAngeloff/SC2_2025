@@ -1,3 +1,6 @@
+%%Prximo a hacer
+%FT estimadas y teroicas que me dieron y capturas
+
 \documentclass{article}
 \usepackage[spanish]{babel}
 \usepackage[utf8]{inputenc}
@@ -12,8 +15,8 @@
 
 \begin{document}
 
-\section{Item 1}
-\subsection{Modelado de un sistema RLC en variables de estado}
+\section{Caso de estudio 1: Sistema de dos variables de estado}
+\subsection*{Ítem [1]: Modelado de un sistema RLC en variables de estado}
 
 Se parte de un circuito serie RLC como el mostrado en la figura, con una entrada de tensión $v_e(t)$ y como salida se toma la tensión en la resistencia, $v_R(t)$.
 
@@ -80,11 +83,6 @@ B =
 \end{bmatrix}
 \]
 
-<<<<<<< HEAD
-Además, si se quiere obtener la salida $y(t) = v_R(t) = R \cdot i(t)$, se define:
-\[
-y(t) = C x(t), \quad
-=======
 La salida se define:
 \[
 y(t) = C x(t) \]
@@ -92,7 +90,6 @@ Donde:
 \[y(t) = v_R(t) = R \cdot i(t)\] 
  
 \[
->>>>>>> c89398b (actualizando el repo postparcial)
 C = 
 \begin{bmatrix}
 R & 0
@@ -109,56 +106,44 @@ R = 220 \, \Omega, \quad L = 500 \, \text{mH}, \quad C = 2{,}2 \, \mu\text{F}
 
 La entrada $v_e(t)$ se define como una señal escalón que cambia de signo cada $10$ ms, alternando entre $+12$ V y $-12$ V. Las condiciones iniciales del sistema se consideraron nulas.
 
-<<<<<<< HEAD
-Antes de simular, se analizó la dinámica del sistema. Para eso se calcularon los polos a partir de la matriz $A$, o de forma equivalente, con la función de transferencia obtenida por Laplace. Esto permite ver si el sistema es subamortiguado, sobreamortiguado o críticamente amortiguado.
-
-Con los polos, se determinó el tiempo de integración necesario. Si el sistema es oscilatorio, se eligió el paso como $h \approx \frac{1}{20 \cdot \omega_d}$, y si no, se basó en la dinámica más rápida. En este caso, se utilizó integración por Euler para simular la evolución de las variables de estado en el tiempo.
-=======
-Antes de simular, se analizó la dinámica del sistema. Para eso se calcularon los polos a partir de la matriz $A$, Calculando el siguiente determinante obtenemos el polinomio caracteristico del sistema, para luego obtener los polos.
-
-$$det|sI-A| -> Polinomio Caracteristico del sistema$$
+Antes de simular, se analizó la dinámica del sistema. Para eso se calcularon los polos a partir de la matriz $A$. Calculando el determinante \( \det|sI - A| \) obtenemos el polinomio caracteristico del sistema, para luego obtener los polos.
 
 Resulta: 
 
 $$S_{1,2}=-220 \, \pm J \, 927.74 $$
 
-Con estos polos podemos deducir que se trata de un sistema subamortiguado. Al ser un sistema con polos complejos conjugados, se calculo el tiempo de integracion en base a la frecuencia natural amortiguada,  $h \approx \frac{2\pi}{100 \cdot \omega_d}$. Despejando $\ommega_d$ de los polos obtenidos. 
+Con estos polos podemos deducir que se trata de un sistema subamortiguado. Al ser un sistema con polos complejos conjugados, se calculo el tiempo de integracion en base a la frecuencia natural amortiguada,  $h \approx \frac{2\pi}{100 \cdot \omega_d}$. Despejando $\omega_d$ de los polos obtenidos. 
 
-\[w_d=932.3 \, \frac{rad}{seg}\] 
-\[ h=\frac{2\pi}{100 \cdot \omega_d} =67\,\mu seg\]
+\[w_d=927.74 \, \frac{rad}{seg}\] 
+\[ h=\frac{2\pi}{100 \cdot \omega_d} =67.7\,\mu seg\]
 
 
 En este caso, se utilizó integración por Euler para simular la evolución de las variables de estado en el tiempo.
->>>>>>> c89398b (actualizando el repo postparcial)
-
+\begin{equation*}
+    x(k+1) = x(k) + h \cdot \dot{x}(k)
+\end{equation*}
 El tiempo total de simulación fue de $50$ ms, suficiente para observar varios ciclos del cambio de la entrada.
+
+\begin{figure}[h!t]
+      \centering
+        \includegraphics[width=0.8\textwidth]{/home/jorge/Documentos/FCEFyN/SC2/Pucheta/TP1/Capturas/item1}
+          \caption{Simulacion del modelo.}
+            \label{fig:etiqueta}
+        \end{figure} 
 
 \subsection*{Conclusión}
 
-<<<<<<< HEAD
-Este trabajo permitió entender cómo, a partir del concepto de variables de estado, se puede modelar y simular un sistema físico real como el circuito RLC. Elegimos como variables de estado a las que representan el almacenamiento de energía (corriente en el inductor y tensión en el capacitor), con lo cual armamos las ecuaciones diferenciales que definen el comportamiento dinámico del sistema.
-
-Después de armar la representación en el espacio de estados, usamos la matriz del sistema $A$ para analizar la dinámica interna, ver si es oscilatoria o no, y con eso elegir un paso de integración adecuado. En este caso, aplicamos el método de Euler para integrar numéricamente las ecuaciones del sistema.
-=======
-Este trabajo permitió entender cómo, a partir del concepto de variables de estado, se puede modelar y simular un sistema físico real como el circuito RLC. 
->>>>>>> c89398b (actualizando el repo postparcial)
+Este punto permitió entender cómo, a partir del concepto de variables de estado, se puede modelar y simular un sistema físico real como el circuito RLC. 
 
 De la simulación se puede observar cómo el sistema responde ante una entrada que cambia de $+12$ a $-12$ V cada 10 ms. El comportamiento de la corriente y la tensión en el capacitor refleja la dinámica esperada del sistema RLC: oscilaciones amortiguadas, con una respuesta que intenta seguir los cambios bruscos de la entrada pero lo hace de forma suave debido a la presencia del inductor y el capacitor, que actúan como filtros.
 
-Este análisis es clave para entender el comportamiento temporal de sistemas eléctricos y para poder predecir su respuesta ante distintos tipos de entrada.
-
-<<<<<<< HEAD
-=======
 
 
->>>>>>> c89398b (actualizando el repo postparcial)
-\section{Item 2}
-\section*{Identificación de parámetros de un sistema RLC a partir de la respuesta al escalón}
+\subsection*{ Ítem [2] Identificación de parámetros de un sistema RLC a partir de la respuesta al escalón}
 
-\subsection*{Planteo del problema}
-Se dispone de la respuesta medida de un circuito RLC serie frente a una excitación tipo escalón. El objetivo es estimar los valores de $R$, $L$ y $C$ del sistema a partir de los datos, usando el método de la respuesta al escalón y comparando los resultados con el modelo teórico.
+Se dispone de la respuesta medida de un circuito RLC serie frente a una excitación tipo escalón que empieza en $t=0.01 \, seg$ y cada $\Delta t=0.05 \, seg$ la aplitud del escalon cambia entre $V_e=12 \, V$ y $V_e=-12 \, V $. El objetivo es estimar los valores de $R$, $L$ y $C$ del sistema a partir de los datos ($v_e(t)$, $v_c(t)$ e $i(t)$), usando el método de la respuesta al escalón y comparando los resultados con el modelo teórico.
 
-\subsection*{Modelo del sistema}
+\subsection*{Modelo del sistema RLC serie teorico con $v_c$ como salida.}
 El circuito RLC serie responde a la siguiente ecuación diferencial:
 
 \begin{equation}
@@ -180,20 +165,12 @@ V_e(t) = LC \frac{d^2V_C(t)}{dt^2} + RC \frac{dV_C(t)}{dt} + V_C(t)
 Aplicando transformada de Laplace (con condiciones iniciales nulas), se obtiene la función de transferencia teórica:
 
 \begin{equation}
-\frac{V_C(s)}{V_e(s)} = \frac{1}{LC s^2 + RC s + 1}
+    \frac{V_C(s)}{V_e(s)} =G_{teo}(s)= \frac{1}{LC s^2 + RC s + 1}
 \end{equation}
 
-\subsection*{Análisis inicial de la respuesta}
-A partir del análisis gráfico de la respuesta medida del sistema se observó:
 
-\begin{itemize}
-    \item La salida $V_C(t)$ no presenta oscilaciones, por lo que se descartan polos complejos conjugados.
-    \item La forma de la curva sugiere un sistema de segundo orden con \textbf{polos reales distintos}.
-    \item Se observó una señal de entrada escalón con retardo. Para evitar complejidades, se seleccionó el primer escalón positivo sin retardo aparente.
-\end{itemize}
-
-\subsection*{Identificación por método de 3 puntos (polo-polo-cero)}
-Se aplicó el método descripto para sistemas de segundo orden con polos reales distintos, considerando una función de transferencia del tipo:
+\subsection*{Identificación por método de Chen para polos reales distintos}
+Debido a la forma de la funcion de transferencia del circuito RLC, con dos polos y un cero, se aplicó el método descripto para sistemas de segundo orden con polos reales distintos, considerando una función de transferencia del tipo:
 
 \begin{equation}
 G(s) = \frac{K(T_3 s + 1)}{(T_1 s + 1)(T_2 s + 1)}
@@ -203,8 +180,9 @@ Donde:
 \begin{itemize}
     \item $K$: ganancia de estado estacionario.
     \item $T_1, T_2$: constantes de tiempo asociadas a los polos reales.
-    \item $T_3$: constante de tiempo asociada al cero (posible).
+    \item $T_3$: constante de tiempo asociada al cero.
 \end{itemize}
+
 
 Se seleccionaron tres puntos de la salida equiespaciados temporalmente: $t_1$, $2t_1$, y $3t_1$, extrayendo los valores de $V_C$ correspondientes: $y_1$, $y_2$, $y_3$.
 
@@ -231,9 +209,20 @@ T_3 &= \beta(T_1 - T_2) + T_1
 \end{align}
 
 Con estos valores se construyó la función de transferencia estimada $\hat{G}(s)$.
+\begin{equation}
+    \hat{G}(s) = \frac{K(T_3 s + 1)}{(T_1 s + 1)(T_2 s + 1)}
+\end{equation}
+
+\begin{figure}[!ht]
+      \centering
+        \includegraphics[width=0.8\textwidth]{/home/jorge/Documentos/FCEFyN/SC2/Pucheta/TP1/Capturas/item2_estimada}
+          \caption{Comparacion de la respuesta al escalon de la funcion de transferencia real vs la estimada}
+            \label{fig:etiqueta2}
+        \end{figure} 
+
 
 \subsection*{Estimación de parámetros físicos del sistema}
-La función de transferencia teórica no contiene el cero, por lo que se planteó:
+La función de transferencia teórica no contiene el cero, como ya vimos nos queda:
 
 \begin{equation}
 G_{teo}(s) = \frac{1}{LC s^2 + RC s + 1}
@@ -258,14 +247,33 @@ R &= \text{coeficiente de } s \div C \\
 L &= \text{coeficiente de } s^2 \div C
 \end{align}
 
+Obtengo:
+\begin{center}
+\begin{tabular}{lc}
+\hline
+Componente & Valor \\
+\hline
+\(R\) & \(282.3\ \Omega\) \\
+\(L\) & \(29.4 \ \mathrm{mH}\) \\
+\(C\) & \(2.177 \ \mathrm{\mu F}\) \\
+\hline
+\end{tabular}
+\end{center}
 \subsection*{Comparación de modelos}
 Se graficaron en conjunto las siguientes curvas:
 \begin{itemize}
     \item Respuesta medida del sistema.
     \item Respuesta del modelo estimado $\hat{G}(s)$.
     \item Respuesta del modelo teórico $G_{teo}(s)$ con los valores de $R$, $L$ y $C$ obtenidos.
-    \item Respuesta del modelo teórico \textbf{con el cero} (modelo ampliado).
+    \item Respuesta del modelo teórico \textbf{con el cero} obtenido en el modelo estimado.
 \end{itemize}
+
+\begin{figure}[ht!]
+      \centering
+        \includegraphics[width=0.8\textwidth]{/home/jorge/Documentos/FCEFyN/SC2/Pucheta/TP1/Capturas/item2_comparacion}
+          \caption{Comparacion de los resultados obtenidos.}
+            \label{fig:etiqueta3}
+        \end{figure} 
 
 \subsection*{Observaciones}
 \begin{itemize}
@@ -276,16 +284,15 @@ Se graficaron en conjunto las siguientes curvas:
 
 \subsection*{Conclusiones}
 \begin{itemize}
-    \item Se logró estimar adecuadamente una función de transferencia a partir de datos experimentales, utilizando el método de los tres puntos para sistemas con polos reales distintos.
-    \item A partir del modelo estimado se obtuvieron valores razonables de $R$, $L$ y $C$ que reproducen con buena precisión la dinámica del sistema.
+    \item Se logró estimar adecuadamente una función de transferencia a partir de datos experimentales, utilizando el método Chen de los tres puntos para sistemas con polos reales distintos.
+    \item A partir del modelo estimado se obtuvieron valores razonables de $R$, $L$ y $C$ <que reproducen con buena precisión la dinámica del sistema.
     \item La inclusión del cero en el modelo mejora el ajuste con la señal medida, lo que demuestra la utilidad del modelo de identificación, aún cuando no coincida estructuralmente con el circuito real.
     \item El método demuestra ser útil para sistemas de segundo orden sin oscilaciones, donde se pueda asumir un modelo de polos reales distintos.
 \end{itemize}
 
-\section{Item 3}
-\subsection*{Verificación del modelo a partir del segundo escalón negativo}
+\subsection{Item 3: Verificación del modelo a partir del segundo escalón negativo y la corriente}
 
-Para validar los parámetros estimados en los ítems anteriores, se utilizó el segundo escalón negativo de la señal de entrada, el cual ocurre aproximadamente a los $0.05\,$s. A partir de este punto, se extrajeron las señales medidas de corriente $i(t)$, tensión de entrada $v_i(t)$ y tensión en el capacitor $v_c(t)$.
+Para validar los parámetros estimados en el ítem 2, se utilizó el segundo escalón negativo de la señal de entrada, el cual ocurre aproximadamente a los $0.05\,$s. A partir de este punto, se extrajeron las señales medidas de corriente $i(t)$, tensión de entrada $v_i(t)$ y tensión en el capacitor $v_c(t)$.
 
 Se normalizó el eje temporal para que el instante inicial coincida con el comienzo del escalón (es decir, $t=0$). Luego, se estimó la corriente utilizando el valor de capacitancia $C$ previamente calculado, a partir de la ecuación:
 
@@ -297,69 +304,46 @@ Para la derivada temporal, se aplicó el método de diferencias hacia atrás sob
 
 A continuación, se presenta la comparación entre la corriente estimada y la medida:
 
-%\begin{figure}[h!]
-  %  \centering
-   % \includegraphics[width=0.9\textwidth]{figuras/comparacion_corriente_verificacion.png}
-    %\caption{Comparación entre corriente medida y corriente estimada a partir de la derivada de $v_c(t)$, utilizando la capacitancia estimada en el ítem anterior.}
-    %\label{fig:verificacion_corriente}
-%\end{figure}
+\begin{figure}[ht!]
+      \centering
+        \includegraphics[width=0.8\textwidth]{/home/jorge/Documentos/FCEFyN/SC2/Pucheta/TP1/Capturas/item3}
+          \caption{Verificacion de los componentes con la corriente.}
+            \label{fig:etiqueta4}
+        \end{figure} 
 
 \subsubsection*{Conclusiones}
 
-La superposición entre la corriente medida y la corriente estimada es razonablemente buena, especialmente en la forma general de la respuesta y el pico inicial. Esto valida el valor de la capacitancia $C$ previamente estimado, así como la hipótesis de que el modelo obtenido describe adecuadamente el comportamiento dinámico del circuito RLC en torno a transiciones de entrada.
+La superposición entre la corriente medida y la corriente estimada es razonablemente buena, especialmente en la forma general de la respuesta y el pico inicial. Esto valida el valor de la capacitancia $C$ estimada, así como el modelo obtenido y describe adecuadamente el comportamiento dinámico del circuito RLC en torno a transiciones de entrada. Esto podria ser util para dimensionar los componentes reales por ejemplo.
 
-Sin embargo, se observan pequeñas diferencias en la amplitud y en el decaimiento, lo cual puede atribuirse a:
-\begin{itemize}
-    \item Aproximaciones numéricas en el cálculo de la derivada.
-    \item Limitaciones de precisión en los datos medidos.
-    \item Efectos no modelados como la resistencia parásita del capacitor o pequeñas no linealidades.
-\end{itemize}
+Este análisis respalda la validez del modelo obtenido a partir del primer escalón positivo, demostrando su capacidad para reproducir correctamente el comportamiento del sistema ante nuevas excitaciones.
 
-En conjunto, este análisis respalda la validez del modelo obtenido a partir del primer escalón positivo, demostrando su capacidad para reproducir correctamente el comportamiento del sistema ante nuevas excitaciones.
+\section{Caso de estudio 2. Sistema de tres variables de estado.}
+\subsection*{Ítem [4] - Torque máximo soportado por el motor con controlador PID}
 
-section{Caso 2}
-\subsection*{Ítem [4] -- Torque máximo soportado por el motor con controlador PID}
+Determinar el torque de carga máximo que puede soportar el motor modelado, alimentado como maximo con \SI{12}{\volt},  evaluando la respuesta del sistema controlado con un PID discreto. Se busca identificar el valor de $T_L$ a partir del cual el motor no puede mantener su velocidad de referencia o directamente se detenga.
 
-\subsubsection*{Objetivo}
-Determinar el torque de carga máximo que puede soportar el motor modelado mediante las ecuaciones (1-5), (1-6) y (1-7) bajo una alimentación constante de \SI{12}{\volt}, evaluando la respuesta del sistema controlado con un PID discreto. Se busca identificar el valor de $T_L$ a partir del cual el motor no puede mantener su velocidad de referencia.
+Se utilizó un modelo del motor a partir del modelado de estados implementado mediante integración por el método de Euler con paso temporal $\Delta t = \SI{1e-7}{\second}$. El sistema es regulado por un controlador PID con parámetros:
+\begin{center}
+\begin{tabular}{l}
+  \hline
+  $K_p = 6$   \\
+  $K_i = 920$ \\
+  $K_d = 0$   \\
+  \hline
+\end{tabular}
+\end{center}
 
-\subsubsection*{Metodología}
-Se utilizó un modelo del motor implementado en MATLAB mediante integración por el método de Euler con paso temporal $\Delta t = \SI{1e-7}{\second}$. El sistema es regulado por un controlador PID con parámetros:
+El torque de carga $T_L$ se incrementa linealmente en cada paso temporal con un valor de $\Delta T_L = \SI{1e-12}{Nm}$ hasta un tiempo total de simulación de $25 \, mseg$. Se registran la velocidad angular $\omega(t)$ y el valor de $T_L(t)$ para identificar el instante en el que la velocidad angular comienza a decaer y no puede mantenerse próxima a la referencia impuesta de \SI{20}{rad/s} o cruza por cero.
 
-\begin{itemize}
-  \item $K_p = 6$
-  \item $K_i = 920$
-  \item $K_d = 0$
-\end{itemize}
-
-El torque de carga $T_L$ se incrementa linealmente en cada paso temporal con un valor de $\Delta T_L = \SI{1e-9}{Nm}$ hasta un tiempo total de simulación de \SI{5}{\milli\second}. Se registran la velocidad angular $\omega(t)$ y el valor de $T_L(t)$ para identificar el instante en el que la velocidad angular comienza a decaer y no puede mantenerse próxima a la referencia impuesta de \SI{2}{rad/s}.
-
-\subsubsection*{Código}
-El siguiente fragmento representa la simulación principal del sistema:
-
-\begin{lstlisting}[language=Matlab, caption={Simulación para identificación de $T_L$ máximo}]
-% Fragmento clave:
-TL=0; delta_TL = 1e-9;
-...
-for t = 0:t_etapa:tF
-    ...
-    X = modmotor(t_etapa, X, u, TL);
-    ...
-    x1(ii)=X(1); % Omega
-    ...
-    TL_vec(ii) = TL;
-    TL = TL + delta_TL;
-end
-\end{lstlisting}
 
 \subsubsection*{Resultados}
 
-%\begin{figure}[H]
- %   \centering
-  %  \includegraphics[width=0.75\textwidth]{figuras/tl_vs_omega.png}
-   % \caption{Evolución de la velocidad angular del motor y del torque de carga aplicado}
-    %\label{fig:tl_vs_omega}
-%\end{figure}
+\begin{figure}[ht!]
+      \centering
+        \includegraphics[width=0.8\textwidth]{/home/jorge/Documentos/FCEFyN/SC2/Pucheta/TP1/Capturas/item4}
+          \caption{Carga maxima para detener el motor.}
+            \label{fig:etiqueta5}
+        \end{figure} 
 
 La figura muestra cómo la velocidad angular $\omega(t)$ decrece a medida que el torque de carga incrementa, hasta llegar a un punto donde el motor no puede sostener la velocidad de referencia. Observando el cruce por cero de la velocidad, se puede estimar que el torque máximo soportado bajo estas condiciones de control es:
 
@@ -367,126 +351,82 @@ La figura muestra cómo la velocidad angular $\omega(t)$ decrece a medida que el
 T_{L, \text{máx}} \approx \SI{2.2e-5}{Nm}
 \]
 
-Este valor se obtuvo al observar el cruce por cero en el gráfico de $\omega(t)$, correspondiente aproximadamente a $t \approx \SI{0.0022}{\second}$.
 
 \subsubsection*{Observaciones}
 \begin{itemize}
-    \item La estimación del torque máximo es sensible a los parámetros del PID: un controlador más agresivo podría sostener un $T_L$ ligeramente mayor antes de perder seguimiento.
-    \item Es importante considerar este valor como una referencia para dimensionar adecuadamente el hardware de control y potencia, como transistores de salida y disipadores térmicos.
-    \item Se recomienda realizar simulaciones adicionales con distintos valores de referencia y parámetros del controlador para obtener una curva característica del sistema bajo distintas condiciones de operación.
+    \item Es importante considerar este valor como una referencia para dimensionar adecuadamente el hardware de control y potencia.
 \end{itemize}
 
-\section{Ítem 5: Identificación del modelo dinámico del motor}
 
-\subsection{Objetivo}
 
-El objetivo de este ítem es obtener un modelo dinámico que describa el comportamiento de un motor de corriente continua, a partir de mediciones experimentales de su velocidad angular $\omega$ frente a dos entradas: un escalón de tensión $V_a$ y un escalón de torque de carga $T_L$. A partir de las funciones de transferencia estimadas, se pretende extraer los parámetros físicos característicos del modelo del motor.
+\subsection{Ítem 5: Identificación de funciones de transferencia a partir de datos experimentales}
 
-\subsection{1. Carga y preprocesamiento de los datos}
+A partir de las curvas medidas del archivo \texttt{Curvas\_Medidas\_Motor\_2025.xls}, se buscó obtener un modelo que describa cómo se comporta el motor de corriente continua. La entrada fue un escalón de $2\ \text{V}$ y la salida analizada, en un principio, fue la velocidad angular $\omega(t)$. También se intentó ver cómo afecta el torque de carga $T_L$ como una perturbación.
 
-Se utilizaron los datos medidos del archivo \texttt{Curvas\_Medidas\_Motor\_2025.xls}. De dicho archivo se extrajeron los siguientes tramos:
 
-\begin{itemize}
-    \item \textbf{Curva $\omega / V_a$:} Se seleccionaron las filas 201 a 400, donde se aplica un escalón de 12\,V sin retardo.
-    \item \textbf{Curva $\omega / T_L$:} Se seleccionaron las filas 401 a 700, donde se observa una perturbación negativa en la velocidad angular debido a un escalón positivo en el torque de carga.
-\end{itemize}
+Se aplicó el mismo metodo usado en el caso 1, Chen de los tres puntos que sirve para obtener funciones de transferencia de segundo orden partir de la respuesta a un escalón. El modelo general que se plantea es:
 
-En ambos casos se normalizó el tiempo para que $t = 0$ coincida con el instante de aplicación del escalón.
+\begin{equation}
+    G(s) = K \cdot \frac{T_3 s + 1}{(T_1 s + 1)(T_2 s + 1)}
+\end{equation}
 
-Dado que el efecto del escalón en $T_L$ fue una disminución en $\omega$, se aplicó un cambio de signo y centrado respecto al valor inicial para ajustar la señal de velocidad a una forma creciente, compatible con la metodología de identificación utilizada.
+Para aplicar el método, se eligió una parte del experimento donde se ve un escalón claro, se reacomodó el eje del tiempo para que ese escalón empiece en $t = 0$, y se eligieron tres puntos de la curva que son clave para estimar los parámetros. Con eso, se calcularon las constantes de tiempo $T_1$, $T_2$, $T_3$ y la ganancia $K$ del sistema.
 
-\subsection{2. Estimación de la función de transferencia}
+\subsection*{Estimación de la función de transferencia \texorpdfstring{$\omega/V_a$}{w/Va}}
 
-Se empleó el método de los tres puntos para obtener una función de transferencia estimada de segundo orden sobreamortiguada con la siguiente forma:
+A partir de la entrada escalón $V_a(t)$ y la salida velocidad angular $\omega(t)$, aplicando el método se obtuvo un modelo que representaba bien el comportamiento del motor. La forma fue:
+
 
 \[
-G(s) = K \cdot \frac{T_3 s + 1}{(T_1 s + 1)(T_2 s + 1)}
+\frac{\omega(s)}{V_a(s)} = K \cdot \frac{T_3 s + 1}{(T_1 s + 1)(T_2 s + 1)}
 \]
 
-donde:
-\begin{itemize}
-    \item $K$ es la ganancia estática,
-    \item $T_1$ y $T_2$ son las constantes de tiempo asociadas a los dos polos reales distintos,
-    \item $T_3$ es la constante de tiempo asociada al cero.
-\end{itemize}
+Cuando se comparó la respuesta del modelo con los datos reales, se vio que el ajuste era bueno. Sin embargo, desde el punto de vista físico, la función de transferencia que debería tener el motor (según el modelo teórico) es:
 
-El método consiste en tomar tres muestras equiespaciadas de la salida ante un escalón, y a partir de ellas deducir la ganancia y las constantes de tiempo del sistema. Los resultados obtenidos son:
+\begin{equation}
+    \frac{\omega(s)}{V_a(s)} = \frac{K_m K_i}{L_a J_m s^2 + (L_a B_m + R_a J_m) s + (R_a B_m + K_m K_i)}
+\end{equation}
 
-\subsubsection*{Para $\omega / V_a$:}
+Este modelo teórico no tiene ceros, así que el cero que aparece en la estimación por Chen no tiene sentido físico. Por eso, se decidió dejar sólo con el denominador de la estimación (que sí tiene sentido con la dinámica del sistema) y no tener en cuenta el numerador.
 
-\begin{itemize}
-    \item $K = 3.765$
-    \item $T_1 = 0.0045$\,s
-    \item $T_2 = 0.00341$\,s
-    \item $T_3 = 0.00138$\,s
-\end{itemize}
+\subsection*{Dificultades para estimar \texorpdfstring{$\omega/T_L$}{w/TL}}
 
-Función de transferencia estimada:
+Se intentó también obtener un modelo para $\omega/T_L$, considerando el torque de carga como la entrada. Aunque se pudo ajustar una curva, no fue una estimación confiable. Esto se debe a que durante esa parte de los datos extraidos, la entrada $V_a$ seguía activa y, además, las condiciones iniciales no eran cero. Entonces, no se puede decir que la respuesta observada fue únicamente causada por el torque de carga, así que no se pudo identificar bien ese modelo.
 
-\[
-\frac{\omega(s)}{V_a(s)} = \frac{3.765 \cdot (0.00138s + 1)}{(0.0045s + 1)(0.00341s + 1)}
-\]
+\subsection*{Estimación de la función de transferencia \texorpdfstring{$i_a/V_a$}{ia/Va}}
+Para tener una segunda ecuación y así poder obtener los parámetros del motor, se tomó ahora como salida la corriente de armadura $i_a(t)$, manteniendo $V_a(t)$ como entrada. En este caso, la función teórica sí tiene un cero real, y es:
 
-\subsubsection*{Para $\omega / T_L$:}
+\begin{equation}
+    \frac{i_a(s)}{V_a(s)} = \frac{J_m s + B_m}{L_a J_m s^2 + (L_a B_m + R_a J_m) s + (R_a B_m + K_m K_i)}
+\end{equation}
 
-\begin{itemize}
-    \item $K = 33.75$
-    \item $T_1 = 0.00175$\,s
-    \item $T_2 = 0.001845$\,s
-    \item $T_3 = 0.0103$\,s
-\end{itemize}
+Como el denominador es el mismo que en $\omega/V_a$, y el numerador ahora sí tiene un cero real, se pudo usar la estimación completa obtenida con el método de Chen y comparar con el modelo teórico para identificar los parámetros físicos.
 
-Función de transferencia estimada:
+\subsection*{Parámetros identificados}
+Partimos de calcular $R_a$ como la tensión dividida la corriente inicial del escalón:
 
-\[
-\frac{\omega(s)}{T_L(s)} = \frac{33.75 \cdot (0.0103s + 1)}{(0.00175s + 1)(0.001845s + 1)}
-\]
+$$R_a = \frac{V_a}{I_{a(pico)}} =2.415 \, \Omega$$ 
 
-\subsection{3. Modelo físico del motor}
+De la comparación entre los modelos estimados y teóricos, se llegó a los siguientes valores para los parámetros del modelo:
 
-El modelo dinámico del motor utilizado se basa en un esquema típico con tres parámetros eléctricos y tres parámetros mecánicos:
+\begin{align*}
+    R_a &= 2.415\ \Omega \\
+    L_a &= 0.002511\ \text{H} \\
+    J_m &= 0.02056\ \text{kg·m}^2 \\
+    B_m &= 0.026\ \text{N·m·s} \\
+    K_i &= 3.765\ \text{V·s/rad} \\
+    K_m &= 0.2485\ \text{N·m/A}
+\end{align*}
 
-\begin{itemize}
-    \item Parámetros eléctricos: resistencia del inducido $R_a$, inductancia $L_a$, constante de par $K_i$.
-    \item Parámetros mecánicos: momento de inercia $J_m$, coeficiente de fricción viscosa $B_m$, constante de fuerza contraelectromotriz $K_m$.
-\end{itemize}
+Con estos datos, se armaron las funciones de transferencia teóricas $\omega/V_a$ y $I_a/V_a$, y se las comparo con las curvas de los datos y las estimadas.
 
-La función de transferencia general del motor en lazo abierto es:
+\subsection*{Verificación y resultados}
 
-\[
-\frac{\omega(s)}{V_a(s)} = \frac{K_m K_i}{(L_a J_m) s^2 + (L_a B_m + R_a J_m) s + (R_a B_m + K_m K_i)}
-\]
+Se graficaron las respuestas de los modelos estimados y teóricos junto con las curvas reales. En general, se vio que ambos modelos representaban bien el comportamiento del motor, tanto para la velocidad angular como para la corriente de armadura.
 
-Se equipara esta expresión con el denominador de la función estimada y se resuelve el sistema de ecuaciones simbólicas para identificar los parámetros físicos.
+\subsection*{Concluciones}
+En resumen, se pudo encontrar un modelo dinámico confiable para el motor, usando datos experimentales y un método de identificación temporal. Además, se lograron obtener los parámetros físicos del sistema, lo que es muy útil para trabajos futuros de simulación o diseño de controladores.
 
-\subsubsection*{Parámetros identificados}
-
-\begin{itemize}
-    \item $R_a = 2.43\;\Omega$ (valor medido)
-    \item $L_a = 0.00475$\,H
-    \item $K_i = 0.443$
-    \item $J_m = 0.00113$\,kg·m\textsuperscript{2}
-    \item $K_m = 0.562$
-    \item $B_m = 0.146$\,N·m·s/rad
-\end{itemize}
-
-\subsection{4. Observaciones}
-
-\begin{itemize}
-    \item La respuesta estimada para $\omega / V_a$ presenta una excelente coincidencia con la medición experimental, tanto en la ganancia como en la dinámica transitoria.
-    \item Para $\omega / T_L$ se observó mayor dispersión en los datos. Fue necesario invertir la señal y centrarla para obtener una respuesta tipo escalón creciente. A pesar de ello, el modelo estimado representa adecuadamente la dinámica general del sistema.
-    \item Se verificó que el sistema presenta dos polos reales negativos (sobreamortiguado) y un cero en el numerador, como se esperaba para un sistema de segundo orden no mínimo fase.
-    \item El método de identificación por tres puntos es una herramienta efectiva cuando las señales están bien definidas y con bajo nivel de ruido.
-\end{itemize}
-
-\subsection{5. Conclusiones}
-
-\begin{itemize}
-    \item Se obtuvieron modelos dinámicos de segundo orden para el motor en respuesta a $V_a$ y a $T_L$, que se ajustan razonablemente a los datos experimentales.
-    \item A partir de estas funciones de transferencia se identificaron con éxito los parámetros físicos del motor, tanto eléctricos como mecánicos.
-    \item El modelo identificado es adecuado para ser utilizado en el diseño de controladores y en simulaciones más avanzadas que involucren perturbaciones o condiciones de carga variables.
-    \item La combinación de MATLAB y herramientas simbólicas permite resolver con eficiencia problemas de identificación de sistemas físicos a partir de datos reales.
-\end{itemize}
 
 \section{Ítem 6: Control PID discreto del ángulo del motor}
 
@@ -587,8 +527,6 @@ plot(t,acc,'b'); title('Entrada u_t'); xlabel('Tiempo [s]');
 Se logró implementar un controlador PID discreto efectivo que regula el ángulo del motor a 1~rad pese a perturbaciones externas. Fue fundamental ajustar las ganancias a valores más altos que los sugeridos inicialmente y agregar la acción derivativa para evitar oscilaciones sostenidas en régimen. El paso de integración también tuvo un rol clave: si es muy pequeño, se acumulan errores numéricos; si es muy grande, se pierde precisión. Se encontró un equilibrio con $T_s = 10$~ms.
 
 El modelo del motor utilizado corresponde al identificado previamente a partir de curvas experimentales, lo cual permitió simular de manera realista la dinámica del sistema.
-<<<<<<< HEAD
-=======
 \section{Ítem 6}
 
 Se implementó un controlador PID en tiempo discreto para regular el ángulo \(\theta(t)\) de un motor de corriente continua hacia una referencia constante de \(1\,\text{rad}\), considerando un perfil de torque de carga variable \(T_L(t)\), tal como se describe en la Fig. 1-3.
@@ -643,7 +581,6 @@ donde los coeficientes fueron obtenidos a partir de la discretización por difer
 \subsection*{Conclusión}
 
 Se logró implementar correctamente un control PID en tiempo discreto para regular el ángulo del motor ante perturbaciones de carga. El paso de integración del método de Euler fue ajustado a \(h = 10^{-2}\,\text{s}\) para garantizar la estabilidad numérica, dado el nuevo conjunto de parámetros del motor. La acción de control permitió alcanzar y mantener la referencia angular deseada, incluso en presencia de cargas externas variables, demostrando la robustez del diseño PID frente a perturbaciones.
->>>>>>> c89398b (actualizando el repo postparcial)
 
 
 \end{document}

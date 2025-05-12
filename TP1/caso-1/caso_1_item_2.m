@@ -75,7 +75,7 @@ C=2.177e-6;
 L=29.4e-3;
 R=282.3;
 
-num_teo = 1; %se desprecia el cero
+num_teo = [1]; %se desprecia el cero
 den_teo = [L*C R*C 1];
 sys_teo = tf(num_teo, den_teo);
 
@@ -97,7 +97,7 @@ grid on;
 %% Función de transferencia teórica CON el cero (sin despreciar)
 num_teo_cero = [0.0001313 1]; %como nos dio sys_G_ang
 den_teo = [L*C R*C 1];
-sys_teo_cero = tf(num_teo_cero, den_teo);
+sys_teo_cero = tf(num_teo_cero, den_teo)
 
 [y_teo_cero, t_teo_cero] = step(StepAmplitude * sys_teo_cero, t(end));%para graficarla
 
