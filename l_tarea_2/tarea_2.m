@@ -1,14 +1,15 @@
  clear; clc; close all;
 % Obtener la función de transferencia continua G(s)
-G=zpk([],[0 -2],[5])
-Tm=(0.15)
+G=zpk([],[0 -1],[5])
+Tm=(0.09)
+%% 
 
 % Hallar la FT discreta de lazo abierto G_D(s) del sistema 
 % de la figura con Z0H a la entrada y el tiempo de muestreo asignado Tm
 Gd=c2d(G,Tm,'zoh')
 
 % rlocus(Gd);
-  % sisotool(Gd)
+   sisotool(Gd)
 %  C
 %   F=feedback(C*Gd,1) % sistema de lazo cerrado
 % % 
