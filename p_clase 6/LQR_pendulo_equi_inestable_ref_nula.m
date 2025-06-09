@@ -68,7 +68,7 @@ H = [ Mat_A       -Mat_B*inv(R)*Mat_B';
 [n_, va] = size(H);
 
 % Cálculo de autovalores y autovectores del Hamiltoniano
-[V,D] = eig(H) %V:autovectores, cada columna es un autovector, D:autovalores
+[V,D] = eig(H); %V:autovectores, cada columna es un autovector, D:autovalores
 MX1X2 = [];
 
 % Se seleccionan las soluciones estables (autovalores con parte real negativa)
@@ -79,8 +79,8 @@ for(ii=1:n_)
 end
 
 % Separación en bloques
-MX1 = MX1X2(1:n_/2,:);
-MX2 = MX1X2(n_/2+1:end,:);
+MX1 = MX1X2(1:n_/2,:); %M
+MX2 = MX1X2(n_/2+1:end,:); %PM
 
 % Cálculo de la solución P de Riccati (P simétrica definida positiva)
 P = real(MX2*inv(MX1));
@@ -144,7 +144,7 @@ while(i < (tiempo + 1))
     i = i + 1;
 end
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Gráficos
 
 V_(i) = estado' * P * estado;
