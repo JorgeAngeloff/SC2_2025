@@ -50,8 +50,8 @@ H = [Aa   -Ba*(R\Ba');
 % Vectores asociados a autovalores estables (parte real negativa)
 V_estables = V(:, real(diag(D)) < 0);
 % Separar componentes
-MX1 = V_estables(1:4,:);
-MX2 = V_estables(5:end,:);
+MX1 = V_estables(1:4,:); %M
+MX2 = V_estables(5:end,:);%PM
 % Matriz de Riccati
 P = real(MX2 / MX1);
 % Ganancia óptima

@@ -38,7 +38,7 @@ K = Ka(1:3);
 Ki = Ka(4);
 
 % ==== ZONA MUERTA ====
-ZM = 0.1;  % Probar con 0.1, 0.3, 0.5, 0.7, 1.0
+ZM = 0.5;  % Probar con 0.1, 0.3, 0.5, 0.7, 1.0
 
 % ==== ESTADOS ====
 X = zeros(3,1);
